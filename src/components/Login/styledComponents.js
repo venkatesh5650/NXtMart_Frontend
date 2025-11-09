@@ -5,127 +5,146 @@ export const LoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+  min-height: 100vh;
   padding: 20px;
-  box-sizing: border-box;
   background-image: url("https://res.cloudinary.com/dpiu7mohv/image/upload/v1756465869/Background_po1fpj.png");
+  background-size: cover;
+  background-position: center;
+  text-align: center;
 `;
 
 export const LoginCard = styled.div`
-  padding: 1px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  padding: 25px 20px;
   width: 450px;
-  height: 450px;
-  text-align: center;
-`;
-export const Logo = styled.img`
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.6s ease-in-out;
 
-  width: 119px;
-  height: 65px
-  angle: 0 deg;
-  opacity: 1;
+  @media (max-width: 600px) {
+    width: 90%;
+    padding: 20px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+export const Logo = styled.img`
+  width: 110px;
+  height: auto;
+  margin-bottom: 8px;
 `;
 
 export const LoginTitle = styled.h2`
-  margin-bottom: 20px;
   color: darkgreen;
-  font-size: 23px;
+  font-size: 24px;
   font-weight: bold;
-  text-align: center;
-  font-family: "Arial", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  margin: 0;
-  margin-top: 10px;
+  margin-bottom: 15px;
+
+  @media (max-width: 600px) {
+    font-size: 25px;
+  }
 `;
 
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 300px;
-  height: 300px;
-  padding: 30px;
-  border-radius: 8px;
-  margin-left: auto;
-  margin-right: auto;
 `;
 
 export const AllInputContainer = styled.div`
+  width: 100%;
   text-align: left;
-  margin: 0;
 `;
 
 export const InputContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   align-items: center;
-  height: 50px;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
+  height: 48px;
+  width: 93%;
+  margin: 12px 0;
+  border: 1px solid #cbd5e1;
   border-radius: 7px;
+  padding: 0 10px;
+  background: white;
+
+  &:focus-within {
+    border-color: #22c55e;
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+  }
 `;
 
 export const LoginInput = styled.input`
-  height: 24px;
-  width: 70%;
-  padding: 10px;
-  color: black;
+  flex: 1;
   border: none;
   outline: none;
-  border-radius: 7px;
-  font-size: 18px;
+  font-size: 16px;
+  padding-left: 8px;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
 
 export const Label = styled.label`
-  font-size: 16px;
-  font-weight: 400;
-  align-self: flex-start;
-`;
-
-export const LoginButton = styled.button`
-  padding: 10px;
-  background-color: green;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  margin-top: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  &:hover {
-    background-color: black;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  font-size: 15px;
+  font-weight: 500;
 `;
 
 export const ButtonRow = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  width: 100%;
-  gap: 12px; /* spacing between buttons */
+  gap: 12px;
+  margin-top: 18px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+`;
+
+export const LoginButton = styled.button`
+  flex: 1;
+  padding: 12px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.25s;
+
+  &:hover {
+    background-color: black;
+    transform: scale(1.03);
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const SignupButton = styled(LoginButton)`
-  background-color: black; /* slightly different or same */
+  background-color: black;
+
   &:hover {
     background-color: green;
+    transform: scale(1.03);
   }
 `;
 
 export const ErrorMsg = styled.p`
-  color: red;
+  color: #dc2626;
   font-size: 14px;
-  margin-top: 10px;
   text-align: center;
+  margin-top: 10px;
 `;
