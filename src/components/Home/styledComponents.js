@@ -3,138 +3,131 @@ import styled from "styled-components";
 export const HomeContainer = styled.div`
   width: 100%;
   min-height: 100vh;
-  margin-top: 90px;
-
-  @media (max-width: 768px) {
-    margin-top: 60px;
-  }
+  margin-top: 70px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 `;
 
 export const HomeSection = styled.div`
   display: flex;
-  padding: 20px;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
 
   @media (max-width: 992px) {
     flex-direction: column;
-    padding: 10px;
+    padding: 8px;
   }
 `;
 
 export const CategorySection = styled.div`
   width: 20%;
-  height: 90vh;
-  position: sticky;
-  top: 90px;
-  background-color: #ffffff;
-  overflow-y: auto;
-  padding-right: 15px;
+  min-width: 180px;
+  height: calc(100vh - 70px);
+  background: #ffffff;
   border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
 
   @media (max-width: 992px) {
     width: 100%;
     height: auto;
     position: static;
-    border-right: none;
-    padding: 0;
-    margin-bottom: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 `;
 
 export const CategoryHeader = styled.h1`
-  font-size: 20px;
-  color: green;
+  font-size: 22px;
   font-weight: 700;
-  margin-left: 12px;
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-    margin-left: 5px;
+  padding: 12px;
+  color: green;
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
 export const CategoryContainer = styled.ul`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  padding-left: 8px;
+  margin: 0;
+  padding: 0;
 
-  /* ✅ Horizontal Scroll on Mobile */
   @media (max-width: 992px) {
     flex-direction: row;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 8px;
-  }
-
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #94a3b8;
-    border-radius: 8px;
+    gap: 10px;
+    padding: 10px;
   }
 `;
 
 export const CategoryItem = styled.li`
   list-style: none;
+  flex: 1;
 
   @media (max-width: 992px) {
-    margin-right: 10px;
+    flex: unset;
   }
 `;
 
 export const CategoryBtn = styled.button`
-  background: ${(props) => (props.$isActive ? "#e8f5e9" : "transparent")};
-  color: ${(props) => (props.$isActive ? "green" : "#374151")};
-  font-weight: 600;
+  width: 100%;
+  height: 100%;
+  background: ${(props) => (props.$active ? "#d9f7d9" : "transparent")};
+  color: ${(props) => (props.$active ? "green" : "#374151")};
   border: none;
-  padding: 10px 14px;
-  font-size: 17px;
+  font-size: 21px;
+  font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  text-align: left;
+  padding-left: 18px;
+  transition: 0.25s ease-in-out;
 
   &:hover {
-    background-color: #e8f5e9;
-    color: green;
-    transform: translateX(2px);
+    background-color: #e8ffe8;
+    transform: scale(1.03);
   }
 
-  @media (max-width: 768px) {
-    font-size: 15px;
+  @media (max-width: 992px) {
+    font-size: 18px;
+    padding: 8px 12px;
+    flex: none;
   }
 `;
 
 export const ProductsSection = styled.div`
-  width: 80%;
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 18px;
-  padding: 10px;
-
-  @media (max-width: 992px) {
-    width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  }
+  gap: 16px;
+  padding-left: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  overflow-x: hidden;
 
   @media (max-width: 480px) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding-left: 0;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
   }
 `;
 
-export const ProductContainer = styled.div`
-  padding: 14px;
-  border-radius: 10px;
+export const ProductCard = styled.div`
   background: #ffffff;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
-  transition: 0.4s;
-  cursor: pointer;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  text-align: center;
 
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.18);
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
   }
 
-  @media (max-width: 768px) {
-    padding: 10px;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.18);
   }
 `;

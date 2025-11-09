@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-
 import Header from "../Header";
 import ProductItem from "../ProductItem";
 
 import {
+  HomeContainer,
   HomeSection,
   CategorySection,
   CategoryHeader,
@@ -11,15 +11,11 @@ import {
   CategoryItem,
   CategoryBtn,
   ProductsSection,
-  ProductContainer,
-  HomeContainer,
+  ProductCard,
 } from "./styledComponents";
 
 const categoriesList = [
-  {
-    categoryId: 1,
-    categoryName: "All",
-  },
+  { categoryId: 1, categoryName: "All" },
   { categoryId: 2, categoryName: "Fruits & Vegetables" },
   { categoryId: 3, categoryName: "Prepared Foods" },
   { categoryId: 4, categoryName: "Oil" },
@@ -32,57 +28,45 @@ const categoriesList = [
 const Home = () => {
   const [productsData, setProductsData] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
-  // 🔹 Keep cart in React state
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("cartList")) || []
   );
 
   const onAddCart = (product) => {
-    const existingCart = JSON.parse(localStorage.getItem("cartList")) || [];
-    const updatedCart = [...existingCart];
-    const existingCartIndex = updatedCart.findIndex(
-      (item) => item.id === product.id
-    );
+    const cart = [...cartList];
+    const existIndex = cart.findIndex((item) => item.id === product.id);
 
-    if (existingCartIndex >= 0) {
-      updatedCart[existingCartIndex].cartQuantity += 1;
-      updatedCart[existingCartIndex].addCartMsg = "Updated quantity";
+    if (existIndex >= 0) {
+      cart[existIndex].cartQuantity += 1;
+      cart[existIndex].addCartMsg = "Updated quantity";
     } else {
-      updatedCart.push({
-        ...product,
-        cartQuantity: 1,
-        addCartMsg: "Added to Cart",
-      });
+      cart.push({ ...product, cartQuantity: 1, addCartMsg: "Added to Cart" });
     }
-    setCartList(updatedCart);
-    localStorage.setItem("cartList", JSON.stringify(updatedCart));
+
+    setCartList(cart);
+    localStorage.setItem("cartList", JSON.stringify(cart));
   };
 
   useEffect(() => {
-    const getProducts = async () => {
-      const url = `https://nxtmartbackend-5.onrender.com/api/products/?category=${activeCategory}`;
+    const fetchProducts = async () => {
+      const response = await fetch(
+        `https://nxtmartbackend-5.onrender.com/api/products/?category=${activeCategory}`,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTc1NzM0MzkyMCwiZXhwIjoxNzU3MzQ3NTIwfQ.pmTGmANtMPet80cnfp9-bcuM0V11xZ6ynMF50Qy0QXo",
+          },
+        }
+      );
 
-      // const jwtToken = localStorage.getItem("jwt_token");
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTc1NzM0MzkyMCwiZXhwIjoxNzU3MzQ3NTIwfQ.pmTGmANtMPet80cnfp9-bcuM0V11xZ6ynMF50Qy0QXo",
-        },
-      };
-
-      const response = await fetch(url, options);
       if (response.ok) {
         const data = await response.json();
         setProductsData(data);
-        console.log(data);
-      } else {
-        console.log("Failed to fetch products");
       }
     };
 
-    getProducts();
-  }, [activeCategory]); // ✅ run only once
+    fetchProducts();
+  }, [activeCategory]);
 
   return (
     <HomeContainer>
@@ -91,32 +75,29 @@ const Home = () => {
         <CategorySection>
           <CategoryHeader>Categories</CategoryHeader>
           <CategoryContainer>
-            {categoriesList.map((eachCategory) => (
-              <CategoryItem key={eachCategory.categoryId}>
+            {categoriesList.map((cat) => (
+              <CategoryItem key={cat.categoryId}>
                 <CategoryBtn
-                  $isActive={activeCategory === eachCategory.categoryName}
-                  onClick={() => setActiveCategory(eachCategory.categoryName)}
+                  $active={activeCategory === cat.categoryName}
+                  onClick={() => setActiveCategory(cat.categoryName)}
                 >
-                  {eachCategory.categoryName}
+                  {cat.categoryName}
                 </CategoryBtn>
               </CategoryItem>
             ))}
           </CategoryContainer>
         </CategorySection>
         <ProductsSection>
-          {productsData.map((eachProduct) => {
-            // find current cart item to pass msg
-            const productCartItem = cartList.find(
-              (item) => item.id === eachProduct.id
-            );
+          {productsData.map((product) => {
+            const cartItem = cartList.find((x) => x.id === product.id);
             return (
-              <ProductContainer key={eachProduct.id}>
+              <ProductCard key={product.id}>
                 <ProductItem
-                  productDetails={eachProduct}
+                  productDetails={product}
                   onAddCart={onAddCart}
-                  addCartMsg={productCartItem?.addCartMsg || ""}
+                  addCartMsg={cartItem?.addCartMsg || ""}
                 />
-              </ProductContainer>
+              </ProductCard>
             );
           })}
         </ProductsSection>

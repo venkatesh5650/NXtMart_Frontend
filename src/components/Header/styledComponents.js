@@ -9,7 +9,7 @@ export const HeaderContainer = styled.header`
   height: 65px;
   position: fixed;
   top: 0;
-  width: 100%;   /* ✅ Keep inside viewport */
+  width: 100vw;   /* ✅ Keep inside viewport */
   box-sizing: border-box; /* ✅ Prevent overflow */
   z-index: 1000;
   overflow: hidden; /* ✅ Avoid horizontal expansion */
@@ -22,7 +22,7 @@ export const HeaderContainer = styled.header`
 
 export const Logo = styled.img`
   width: 110px;
-  height: auto;
+  height: 60px;
   cursor: pointer;
   /* ✅ Remove problematic margin-left */
   

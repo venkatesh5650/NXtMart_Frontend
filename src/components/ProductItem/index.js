@@ -1,31 +1,34 @@
 import {
+  ProductWrapper,
   ProductImg,
   DetailsSection,
+  ProductInfo,
   AddCartBtn,
   CartMsg,
 } from "./styledComponents";
 
-const ProductItem = (props) => {
-  const { productDetails, onAddCart, addCartMsg } = props;
+const ProductItem = ({ productDetails, onAddCart, addCartMsg }) => {
   const { name, price, quantity, image_url } = productDetails;
 
   return (
-    <div>
+    <ProductWrapper>
       <ProductImg src={image_url} alt={name} />
+
       <DetailsSection>
-        <div>
+        <ProductInfo>
           <h4>{name}</h4>
           <p>Quantity: {quantity}</p>
-          <h4>Price: ₹{price}</h4>
-        </div>
+          <h4>₹ {price}</h4>
+        </ProductInfo>
+
         <div>
-          <AddCartBtn type="button" onClick={() => onAddCart(productDetails)}>
+          <AddCartBtn onClick={() => onAddCart(productDetails)}>
             Add to Cart
           </AddCartBtn>
           {addCartMsg && <CartMsg>{addCartMsg}</CartMsg>}
         </div>
       </DetailsSection>
-    </div>
+    </ProductWrapper>
   );
 };
 
