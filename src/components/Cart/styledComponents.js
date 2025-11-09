@@ -55,7 +55,7 @@ export const EmptyCartContainer = styled.div`
   margin-top: 60px;
   margin-bottom: 80px;
   @media(max-width: 600px) {
-   margin-bottom: 155px;
+   margin-bottom: 185px;
 }
 `;
 
