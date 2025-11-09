@@ -30,6 +30,7 @@ export const CartsView = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 100%;
 `;
 
 export const CartItemsContainer = styled.div`
@@ -52,6 +53,10 @@ export const CartItemsContainer = styled.div`
 export const EmptyCartContainer = styled.div`
   text-align: center;
   margin-top: 60px;
+  margin-bottom: 80px;
+  @media(max-width: 600px) {
+   margin-bottom: 155px;
+}
 `;
 
 export const EmptyCartIcon = styled(BsCart2)`
@@ -111,12 +116,12 @@ export const CheckoutButton = styled.button`
   }
 
   @media (max-width: 600px) {
-    width: 100%;
+    width: 50%;
   }
 `;
 
 export const QueryContainer = styled.div`
-  position: fixed;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 100%; /* ✅ Full width without overflow */
