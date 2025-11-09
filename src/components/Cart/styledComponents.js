@@ -9,8 +9,7 @@ export const CartContainer = styled.div`
 
   /* ✅ Correct spacing below fixed Header */
   padding-top: 85px;
-  padding-left: 12px;
-  padding-right: 12px;
+
   box-sizing: border-box;
   overflow-x: hidden;
 
@@ -56,11 +55,16 @@ export const EmptyCartContainer = styled.div`
 `;
 
 export const EmptyCartIcon = styled(BsCart2)`
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   color: green;
   opacity: 0.85;
   margin-bottom: 15px;
+
+  @media (max-width: 600px) {
+    height: 60px;
+    width: 60px;
+}
 `;
 
 export const EmptyCartMsg = styled.p`
@@ -112,11 +116,19 @@ export const CheckoutButton = styled.button`
 `;
 
 export const QueryContainer = styled.div`
-  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* ✅ Full width without overflow */
   background-color: green;
-  padding: 26px 12px;
+  padding: 18px 12px;
   text-align: center;
-  margin-top: 50px;
+  box-sizing: border-box;
+  z-index: 1000; /* ✅ Always visible on top */
+
+  @media (max-width: 768px) {
+    padding: 15px 10px;
+  }
 `;
 
 export const ContactMedia = styled.div`
