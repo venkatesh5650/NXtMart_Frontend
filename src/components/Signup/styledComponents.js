@@ -64,7 +64,7 @@ export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 45px;
-  width: 100%;
+  width: 90%;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 7px;
