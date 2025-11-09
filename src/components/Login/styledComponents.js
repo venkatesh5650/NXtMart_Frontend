@@ -2,19 +2,13 @@ import styled from "styled-components";
 
 export const LoginContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
   padding: 20px;
   background-image: url("https://res.cloudinary.com/dpiu7mohv/image/upload/v1756465869/Background_po1fpj.png");
   background-size: cover;
   background-position: center;
-  text-align: center;
-
-  @media (max-width: 600px) {
-    background-image: url("https://res.cloudinary.com/dpiu7mohv/image/upload/v1762679187/Background_4_zyy2ep.png");
-  }
 `;
 
 export const LoginCard = styled.div`
@@ -22,41 +16,30 @@ export const LoginCard = styled.div`
   backdrop-filter: blur(6px);
   border-radius: 10px;
   padding: 25px 20px;
-  width: 450px;
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.6s ease-in-out;
+  width: 400px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.18);
 
   @media (max-width: 600px) {
-    width: 90%;
-    padding: 20px;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    width: 92%;
   }
 `;
 
 export const Logo = styled.img`
-  width: 110px;
+  width: 120px;
   height: auto;
-  margin-bottom: 8px;
+  display: block;
+  margin: 0 auto 10px;
 `;
 
 export const LoginTitle = styled.h2`
+  text-align: center;
   color: darkgreen;
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 
   @media (max-width: 600px) {
-    font-size: 25px;
+    font-size: 20px;
   }
 `;
 
@@ -68,23 +51,21 @@ export const LoginForm = styled.form`
 
 export const AllInputContainer = styled.div`
   width: 100%;
-  text-align: left;
 `;
 
 export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 48px;
-  width: 93%;
   margin: 12px 0;
-  border: 1px solid #cbd5e1;
   border-radius: 7px;
   padding: 0 10px;
-  background: white;
+  border: 1px solid #cbd5e1;
+  background: #fff;
 
   &:focus-within {
-    border-color: #22c55e;
-    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+    border-color: #16a34a;
+    box-shadow: 0 0 4px rgba(22, 163, 74, 0.4);
   }
 `;
 
@@ -92,17 +73,43 @@ export const LoginInput = styled.input`
   flex: 1;
   border: none;
   outline: none;
-  font-size: 16px;
   padding-left: 8px;
+  font-size: 16px;
 
-  @media (max-width: 600px) {
-    font-size: 15px;
+  @media (min-width: 600px) {
+    margin-left: 20px;
   }
 `;
 
 export const Label = styled.label`
   font-size: 15px;
   font-weight: 500;
+`;
+
+export const PasswordRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -5px 0 15px;
+
+  label {
+    cursor: pointer;
+    font-size: 14px;
+    color: #334155;
+  }
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: #16a34a;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    label {
+      font-size: 13px;
+    }
+  }
 `;
 
 export const ButtonRow = styled.div`
@@ -121,19 +128,15 @@ export const LoginButton = styled.button`
   padding: 12px;
   background-color: green;
   color: white;
-  border: none;
   border-radius: 6px;
+  border: none;
   font-size: 16px;
   cursor: pointer;
   transition: 0.25s;
 
   &:hover {
     background-color: black;
-    transform: scale(1.03);
-  }
-
-  @media (max-width: 600px) {
-    width: 100%;
+    transform: scale(1.04);
   }
 `;
 
@@ -142,13 +145,12 @@ export const SignupButton = styled(LoginButton)`
 
   &:hover {
     background-color: green;
-    transform: scale(1.03);
   }
 `;
 
 export const ErrorMsg = styled.p`
   color: #dc2626;
-  font-size: 14px;
   text-align: center;
+  font-size: 14px;
   margin-top: 10px;
 `;
