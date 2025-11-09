@@ -12,6 +12,10 @@ export const SignUpContainer = styled.div`
   background-image: url("https://res.cloudinary.com/dpiu7mohv/image/upload/v1756465869/Background_po1fpj.png");
   background-size: cover;
   background-position: center;
+
+  @media (max-width: 600px) {
+    background-image: url("https://res.cloudinary.com/dpiu7mohv/image/upload/v1762679187/Background_4_zyy2ep.png");
+  }
 `;
 
 export const SignUpCard = styled.div`
