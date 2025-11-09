@@ -1,74 +1,65 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  FaFacebook,
-  FaPinterest,
-  FaTwitter,
-  FaInstagram,
-} from "react-icons/fa";
+import { FaFacebook, FaPinterest, FaTwitter, FaInstagram } from "react-icons/fa";
 
 import Header from "../Header";
 import CartItem from "../CartItem";
-
 import {
   CartContainer,
-  CartsView,
-  EmptyCart,
   CartHeader,
-  EmptyCartMsg,
+  CartsView,
   CartItemsContainer,
-  QueryContainer,
-  ContactMedia,
-  MediaContainer,
-  Media,
-  QueryText,
-  CopyRight,
+  EmptyCartContainer,
+  EmptyCartIcon,
+  EmptyCartMsg,
   BillContainer,
   BillMsg,
   CheckoutButton,
-  EmptyCartContainer,
+  QueryContainer,
+  ContactMedia,
+  QueryText,
+  MediaContainer,
+  Media,
+  CopyRight,
 } from "./styledComponents";
 
 const Cart = () => {
-  const [Cartlist, setCartlist] = useState(() => {
-    return JSON.parse(localStorage.getItem("cartList")) || [];
-  });
+  const [Cartlist, setCartlist] = useState(
+    JSON.parse(localStorage.getItem("cartList")) || []
+  );
   const [TotalAmount, SetTotalAmount] = useState(0);
 
-  const updateLocalStorage = (updatedCart) => {
-    setCartlist(updatedCart);
-    localStorage.setItem("cartList", JSON.stringify(updatedCart));
+  const updateLocalStorage = (updated) => {
+    setCartlist(updated);
+    localStorage.setItem("cartList", JSON.stringify(updated));
   };
 
   const increaseQuantity = (index) => {
-    const updatedCartList = [...Cartlist];
-    updatedCartList[index].cartQuantity += 1;
-    updateLocalStorage(updatedCartList);
+    const updated = [...Cartlist];
+    updated[index].cartQuantity += 1;
+    updateLocalStorage(updated);
   };
 
   const decreaseQuantity = (index) => {
-    const updatedCartList = [...Cartlist];
-    if (updatedCartList[index].cartQuantity > 1) {
-      updatedCartList[index].cartQuantity -= 1;
-      updateLocalStorage(updatedCartList);
+    const updated = [...Cartlist];
+    if (updated[index].cartQuantity > 1) {
+      updated[index].cartQuantity -= 1;
     } else {
-      // optional: remove item if qty = 0
-      updatedCartList.splice(index, 1);
-      updateLocalStorage(updatedCartList);
+      updated.splice(index, 1);
     }
+    updateLocalStorage(updated);
   };
-
-  const cartLength = Cartlist.length;
 
   useEffect(() => {
     const total = Cartlist.reduce(
-      (acc, eachCart) => acc + eachCart.price * eachCart.cartQuantity,
+      (acc, cart) => acc + cart.price * cart.cartQuantity,
       0
     );
     SetTotalAmount(total);
   }, [Cartlist]);
 
   const navigate = useNavigate();
+
   const directToCheckout = () => {
     navigate("/Checkout");
     localStorage.removeItem("cartList");
@@ -77,14 +68,15 @@ const Cart = () => {
   return (
     <CartContainer>
       <Header />
-      {cartLength > 0 && <CartHeader>Cart Items</CartHeader>}
+      {Cartlist.length > 0 && <CartHeader>My Cart</CartHeader>}
+
       <CartsView>
         {Cartlist.length > 0 ? (
           <CartItemsContainer>
-            {Cartlist.map((cartItem, index) => (
+            {Cartlist.map((item, index) => (
               <CartItem
-                key={cartItem.id}
-                itemDetails={cartItem}
+                key={item.id}
+                itemDetails={item}
                 Increase={() => increaseQuantity(index)}
                 Decrease={() => decreaseQuantity(index)}
               />
@@ -92,43 +84,35 @@ const Cart = () => {
           </CartItemsContainer>
         ) : (
           <EmptyCartContainer>
-            <EmptyCart />
+            <EmptyCartIcon />
             <EmptyCartMsg>Your Cart is Empty</EmptyCartMsg>
           </EmptyCartContainer>
         )}
       </CartsView>
-      {cartLength > 0 && (
+
+      {Cartlist.length > 0 && (
         <BillContainer>
-          <BillMsg>
-            Total ({cartLength} items): ₹ {TotalAmount}/-
-          </BillMsg>
+          <BillMsg>Total ({Cartlist.length} items): ₹ {TotalAmount}/-</BillMsg>
           <CheckoutButton onClick={directToCheckout}>Checkout</CheckoutButton>
         </BillContainer>
       )}
+
       <QueryContainer>
         <ContactMedia>
           <QueryText>
-            For any queries, contact +91-9666677770 or mail us
+            For any queries, contact +91-9666677770 or mail us at
             help@nxtmart.co.in
           </QueryText>
 
           <MediaContainer>
-            <Media>
-              <FaFacebook />
-            </Media>
-            <Media>
-              <FaPinterest />
-            </Media>
-            <Media>
-              <FaTwitter />
-            </Media>
-            <Media>
-              <FaInstagram />
-            </Media>
+            <Media><FaFacebook /></Media>
+            <Media><FaPinterest /></Media>
+            <Media><FaTwitter /></Media>
+            <Media><FaInstagram /></Media>
           </MediaContainer>
         </ContactMedia>
 
-        <CopyRight>Copyright © 2023 NxtMart Groceries Supply Pvt Ltd</CopyRight>
+        <CopyRight>© 2023 NxtMart Groceries Supply Pvt Ltd</CopyRight>
       </QueryContainer>
     </CartContainer>
   );

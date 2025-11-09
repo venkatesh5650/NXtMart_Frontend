@@ -3,10 +3,11 @@ import {
   ItemContainer,
   ItemDetails,
   ItemImg,
+  ItemTextBlock,
   ItemName,
   ItemPrice,
   Controller,
-  ControllIcon,
+  ControlButton,
   Quantity,
 } from "./styledComponents";
 
@@ -18,16 +19,17 @@ const CartItem = ({ itemDetails, Increase, Decrease }) => {
       <ItemContainer>
         <ItemDetails>
           <ItemImg src={image_url} alt={name} />
-          <div>
+          <ItemTextBlock>
             <ItemName>{name}</ItemName>
             <p>{quantity}</p>
-            <ItemPrice>₹{price}</ItemPrice>
-          </div>
+            <ItemPrice>₹ {price}</ItemPrice>
+          </ItemTextBlock>
         </ItemDetails>
+
         <Controller>
-          <ControllIcon onClick={Increase}>+</ControllIcon>
+          <ControlButton onClick={Increase}>+</ControlButton>
           <Quantity>{cartQuantity}</Quantity>
-          <ControllIcon onClick={Decrease}>-</ControllIcon>
+          <ControlButton onClick={Decrease}>-</ControlButton>
         </Controller>
       </ItemContainer>
       <hr />

@@ -9,11 +9,13 @@ export const HeaderContainer = styled.header`
   height: 65px;
   position: fixed;
   top: 0;
+  left: 0;
   width: 100vw;   /* ✅ Keep inside viewport */
   box-sizing: border-box; /* ✅ Prevent overflow */
   z-index: 1000;
   overflow: hidden; /* ✅ Avoid horizontal expansion */
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+
 
   @media (max-width: 480px) {
     padding: 8px 12px;
