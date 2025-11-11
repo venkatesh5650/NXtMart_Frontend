@@ -22,8 +22,8 @@ import {
 } from "./styledComponents";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("rahul"); // ✅ pre-filled username
+  const [password, setPassword] = useState("rahul@2021"); // ✅ pre-filled password
   const [showPassword, setShowPassword] = useState(false);
   const [failureMsg, setFailureMsg] = useState("");
 
