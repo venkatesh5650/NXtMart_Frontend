@@ -61,6 +61,7 @@ const Home = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("Fetched products:", data);
         setProductsData(data);
       }
     };
