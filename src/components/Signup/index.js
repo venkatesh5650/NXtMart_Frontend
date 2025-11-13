@@ -45,10 +45,11 @@ const SignUp = () => {
       body: JSON.stringify(userDetails),
     });
 
+    
     const data = await response.json();
     if (response.ok) {
       alert("User Registered Successfully");
-      navigate("/", { replace: true });
+      navigate("/login", { replace: true });
     } else {
       alert(data.error);
     }

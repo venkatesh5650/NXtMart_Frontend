@@ -19,11 +19,11 @@ import {
   InputContainer,
   ErrorMsg,
   PasswordRow,
-  DemoLoginButton, // ✅ NEW styled component
+  DemoLoginButton, 
 } from "./styledComponents";
 
 const Login = () => {
-  // ⚠️ Changed to demo credentials (safe + professional)
+  //  Changed to demo credentials (safe + professional)
   const [username, setUsername] = useState("demo_user");
   const [password, setPassword] = useState("Demo@9988");
 
@@ -72,7 +72,7 @@ const Login = () => {
     }
   };
 
-  // ✅ NEW FUNCTION: Auto-login using demo credentials
+  // Auto-login using demo credentials
   const handleDemoLogin = () => {
     setUsername("demo_user");
     setPassword("Demo@9988");

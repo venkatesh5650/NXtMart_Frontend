@@ -62,8 +62,11 @@ const Home = () => {
     const fetchProducts = async () => {
       const orderBy = sortOrder === "" ? "id" : "price";
       const orderParam = sortOrder === "" ? "ASC" : sortOrder;
+      let apiURL = `https://nxtmartbackend-5.onrender.com/api/products/?search_q=${searchInput}&order_by=${orderBy}&order=${orderParam}`;
 
-      const apiURL = `https://nxtmartbackend-5.onrender.com/api/products/?category=${activeCategory}&search_q=${searchInput}&order_by=${orderBy}&order=${orderParam}`;
+      if (activeCategory !== "All") {
+        apiURL += `&category=${activeCategory}`;
+      }
 
       const response = await fetch(apiURL, {
         headers: {
@@ -85,7 +88,6 @@ const Home = () => {
     <HomeContainer>
       <Header />
       <HomeSection>
-
         {/* LEFT CATEGORY SECTION */}
         <CategorySection>
           <CategoryHeader>Categories</CategoryHeader>
@@ -105,10 +107,8 @@ const Home = () => {
 
         {/* MAIN CONTENT */}
         <div style={{ flex: 1 }}>
-
           {/* 🔍 SEARCH + SORT BAR */}
           <TopControlsContainer>
-
             {/* SEARCH INPUT */}
             <SearchInput
               type="text"
@@ -149,7 +149,6 @@ const Home = () => {
               );
             })}
           </ProductsSection>
-
         </div>
       </HomeSection>
     </HomeContainer>
