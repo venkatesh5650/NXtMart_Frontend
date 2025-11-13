@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import {
   ProductWrapper,
   ProductImg,
@@ -11,24 +13,31 @@ const ProductItem = ({ productDetails, onAddCart, addCartMsg }) => {
   const { name, price, quantity, image_url } = productDetails;
 
   return (
-    <ProductWrapper>
-      <ProductImg src={image_url} alt={name} />
+    <Link
+      to={`/product/${productDetails.id}`}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+      {/* existing product card */}
 
-      <DetailsSection>
-        <ProductInfo>
-          <h4>{name}</h4>
-          <p>Quantity: {quantity}</p>
-          <h4>₹ {price}</h4>
-        </ProductInfo>
+      <ProductWrapper>
+        <ProductImg src={image_url} alt={name} />
 
-        <div>
-          <AddCartBtn onClick={() => onAddCart(productDetails)}>
-            Add to Cart
-          </AddCartBtn>
-          {addCartMsg && <CartMsg>{addCartMsg}</CartMsg>}
-        </div>
-      </DetailsSection>
-    </ProductWrapper>
+        <DetailsSection>
+          <ProductInfo>
+            <h4>{name}</h4>
+            <p>Quantity: {quantity}</p>
+            <h4>₹ {price}</h4>
+          </ProductInfo>
+
+          <div>
+            <AddCartBtn onClick={() => onAddCart(productDetails)}>
+              Add to Cart
+            </AddCartBtn>
+            {addCartMsg && <CartMsg>{addCartMsg}</CartMsg>}
+          </div>
+        </DetailsSection>
+      </ProductWrapper>
+    </Link>
   );
 };
 

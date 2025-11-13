@@ -65,7 +65,7 @@ const Home = () => {
       let apiURL = `https://nxtmartbackend-5.onrender.com/api/products/?search_q=${searchInput}&order_by=${orderBy}&order=${orderParam}`;
 
       if (activeCategory !== "All") {
-        apiURL += `&category=${activeCategory}`;
+        apiURL += `&category=${encodeURIComponent(activeCategory)}`;
       }
 
       const response = await fetch(apiURL, {
@@ -134,7 +134,26 @@ const Home = () => {
           </TopControlsContainer>
 
           {/* PRODUCT GRID */}
-          <ProductsSection>
+          <ProductsSection $empty={productsData.length === 0}>
+            {productsData.length === 0 && (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  minHeight: "300px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "green",
+                  fontSize: "28px",
+                  fontWeight: "700",
+                  backgroundColor: "white",
+                  marginTop: "40px",
+                }}
+              >
+                No Results Found
+              </div>
+            )}
             {productsData.map((product) => {
               const cartItem = cartList.find((x) => x.id === product.id);
 

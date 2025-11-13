@@ -133,9 +133,16 @@ export const SortSelect = styled.select`
 `;
 
 export const ProductsSection = styled.div`
-  display: grid;
-  gap: 16px;
   padding-left: 16px;
+
+  /* When there ARE products → use grid */
+  display: ${(p) => (p.$empty ? "flex" : "grid")};
+  flex-direction: ${(p) => (p.$empty ? "column" : "initial")};
+  justify-content: ${(p) => (p.$empty ? "center" : "initial")};
+  align-items: ${(p) => (p.$empty ? "center" : "initial")};
+  height: ${(p) => (p.$empty ? "400px" : "auto")};
+
+  gap: 16px;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 
   @media (max-width: 480px) {
@@ -143,6 +150,7 @@ export const ProductsSection = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
   }
 `;
+
 
 export const ProductCard = styled.div`
   background: #ffffff;
