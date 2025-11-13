@@ -144,6 +144,23 @@ export const LoginButton = styled.button`
   }
 `;
 
+export const DemoLoginButton = styled.button`
+  width: 100%;
+  background-color: #e6e6e6;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin: 12px 0;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #d1d1d1;
+  }
+`;
+
 export const SignupButton = styled(LoginButton)`
   background-color: black;
 

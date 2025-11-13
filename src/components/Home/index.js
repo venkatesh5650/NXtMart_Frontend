@@ -10,6 +10,9 @@ import {
   CategoryContainer,
   CategoryItem,
   CategoryBtn,
+  TopControlsContainer,
+  SearchInput,
+  SortSelect,
   ProductsSection,
   ProductCard,
 } from "./styledComponents";
@@ -28,10 +31,17 @@ const categoriesList = [
 const Home = () => {
   const [productsData, setProductsData] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchInput, setSearchInput] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+
+  const username = localStorage.getItem("username") || "guest";
+  const storageKey = `cartList_${username}`;
+
   const [cartList, setCartList] = useState(
-    JSON.parse(localStorage.getItem("cartList")) || []
+    JSON.parse(localStorage.getItem(storageKey)) || []
   );
 
+  // 🛒 Add to Cart
   const onAddCart = (product) => {
     const cart = [...cartList];
     const existIndex = cart.findIndex((item) => item.id === product.id);
@@ -44,35 +54,39 @@ const Home = () => {
     }
 
     setCartList(cart);
-    localStorage.setItem("cartList", JSON.stringify(cart));
+    localStorage.setItem(storageKey, JSON.stringify(cart));
   };
 
+  // 📦 Fetch Products (Category + Search + Sorting)
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch(
-        `https://nxtmartbackend-5.onrender.com/api/products/?category=${activeCategory}`,
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTc1NzM0MzkyMCwiZXhwIjoxNzU3MzQ3NTIwfQ.pmTGmANtMPet80cnfp9-bcuM0V11xZ6ynMF50Qy0QXo",
-          },
-        }
-      );
+      const orderBy = sortOrder === "" ? "id" : "price";
+      const orderParam = sortOrder === "" ? "ASC" : sortOrder;
+
+      const apiURL = `https://nxtmartbackend-5.onrender.com/api/products/?category=${activeCategory}&search_q=${searchInput}&order_by=${orderBy}&order=${orderParam}`;
+
+      const response = await fetch(apiURL, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTc1NzM0MzkyMCwiZXhwIjoxNzU3MzQ3NTIwfQ.pmTGmANtMPet80cnfp9-bcuM0V11xZ6ynMF50Qy0QXo",
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched products:", data);
         setProductsData(data);
       }
     };
 
     fetchProducts();
-  }, [activeCategory]);
+  }, [activeCategory, searchInput, sortOrder]);
 
   return (
     <HomeContainer>
       <Header />
       <HomeSection>
+
+        {/* LEFT CATEGORY SECTION */}
         <CategorySection>
           <CategoryHeader>Categories</CategoryHeader>
           <CategoryContainer>
@@ -88,20 +102,55 @@ const Home = () => {
             ))}
           </CategoryContainer>
         </CategorySection>
-        <ProductsSection>
-          {productsData.map((product) => {
-            const cartItem = cartList.find((x) => x.id === product.id);
-            return (
-              <ProductCard key={product.id}>
-                <ProductItem
-                  productDetails={product}
-                  onAddCart={onAddCart}
-                  addCartMsg={cartItem?.addCartMsg || ""}
-                />
-              </ProductCard>
-            );
-          })}
-        </ProductsSection>
+
+        {/* MAIN CONTENT */}
+        <div style={{ flex: 1 }}>
+
+          {/* 🔍 SEARCH + SORT BAR */}
+          <TopControlsContainer>
+
+            {/* SEARCH INPUT */}
+            <SearchInput
+              type="text"
+              placeholder="Search products..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setSearchInput(e.target.value); // apply search on Enter
+                }
+              }}
+            />
+
+            {/* SORT SELECT */}
+            <SortSelect
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
+              <option value="">Sort Price</option>
+              <option value="ASC">Low → High</option>
+              <option value="DESC">High → Low</option>
+            </SortSelect>
+          </TopControlsContainer>
+
+          {/* PRODUCT GRID */}
+          <ProductsSection>
+            {productsData.map((product) => {
+              const cartItem = cartList.find((x) => x.id === product.id);
+
+              return (
+                <ProductCard key={product.id}>
+                  <ProductItem
+                    productDetails={product}
+                    onAddCart={onAddCart}
+                    addCartMsg={cartItem?.addCartMsg || ""}
+                  />
+                </ProductCard>
+              );
+            })}
+          </ProductsSection>
+
+        </div>
       </HomeSection>
     </HomeContainer>
   );

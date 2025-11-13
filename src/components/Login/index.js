@@ -19,11 +19,14 @@ import {
   InputContainer,
   ErrorMsg,
   PasswordRow,
+  DemoLoginButton, // ✅ NEW styled component
 } from "./styledComponents";
 
 const Login = () => {
-  const [username, setUsername] = useState("rahul"); // ✅ pre-filled username
-  const [password, setPassword] = useState("rahul@2021"); // ✅ pre-filled password
+  // ⚠️ Changed to demo credentials (safe + professional)
+  const [username, setUsername] = useState("demo_user");
+  const [password, setPassword] = useState("Demo@9988");
+
   const [showPassword, setShowPassword] = useState(false);
   const [failureMsg, setFailureMsg] = useState("");
 
@@ -31,9 +34,7 @@ const Login = () => {
 
   useEffect(() => {
     const token = Cookies.get("jwt_token");
-    if (token) {
-      navigate("/");
-    }
+    if (token) navigate("/");
   }, [navigate]);
 
   const redirectHome = (jwtToken) => {
@@ -59,7 +60,9 @@ const Login = () => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
+
       if (response.ok === true) {
+        localStorage.setItem("username", username);
         redirectHome(data.jwt_token);
       } else {
         setFailureMsg(data.error);
@@ -67,6 +70,12 @@ const Login = () => {
     } catch (error) {
       console.log("Something Went Wrong:", error);
     }
+  };
+
+  // ✅ NEW FUNCTION: Auto-login using demo credentials
+  const handleDemoLogin = () => {
+    setUsername("demo_user");
+    setPassword("Demo@9988");
   };
 
   return (
@@ -85,7 +94,7 @@ const Login = () => {
               <CgProfile size={20} color="gray" />
               <LoginInput
                 type="text"
-                placeholder="Enter Your Username"
+                placeholder="Enter your Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 id="username"
@@ -97,7 +106,7 @@ const Login = () => {
               <TbLockPassword size={20} color="gray" />
               <LoginInput
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter Your Password"
+                placeholder="Enter your Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
@@ -113,6 +122,11 @@ const Login = () => {
               />
               <label htmlFor="showPwd">Show Password</label>
             </PasswordRow>
+
+            {/* ✅ Demo Login Button */}
+            <DemoLoginButton type="button" onClick={handleDemoLogin}>
+              Use Demo Credentials
+            </DemoLoginButton>
 
             <ButtonRow>
               <LoginButton type="submit">Login</LoginButton>

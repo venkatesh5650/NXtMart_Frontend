@@ -4,7 +4,6 @@ export const HomeContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   margin-top: 70px;
-  box-sizing: border-box;
   overflow-x: hidden;
 `;
 
@@ -12,11 +11,9 @@ export const HomeSection = styled.div`
   display: flex;
   width: 100%;
   padding: 12px;
-  box-sizing: border-box;
 
   @media (max-width: 992px) {
     flex-direction: column;
-    padding: 8px;
   }
 `;
 
@@ -26,16 +23,14 @@ export const CategorySection = styled.div`
   height: calc(100vh - 70px);
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
-  display: flex;
-  flex-direction: column;
   position: sticky;
 
   @media (max-width: 992px) {
     width: 100%;
     height: auto;
     position: static;
+    display: flex;
     overflow-x: auto;
-    white-space: nowrap;
   }
 `;
 
@@ -44,47 +39,40 @@ export const CategoryHeader = styled.h1`
   font-weight: 700;
   padding: 12px;
   color: green;
+
   @media (max-width: 600px) {
     display: none;
   }
 `;
 
 export const CategoryContainer = styled.ul`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 992px) {
     flex-direction: row;
-    gap: 10px;
     padding: 10px;
+    gap: 10px;
   }
 `;
 
 export const CategoryItem = styled.li`
   list-style: none;
-  flex: 1;
-
-  @media (max-width: 992px) {
-    flex: unset;
-  }
 `;
 
 export const CategoryBtn = styled.button`
   width: 100%;
-  height: 100%;
-  background: ${(props) => (props.$active ? "#d9f7d9" : "transparent")};
-  color: ${(props) => (props.$active ? "green" : "#374151")};
+  background: ${(p) => (p.$active ? "#d9f7d9" : "transparent")};
+  color: ${(p) => (p.$active ? "green" : "#374151")};
   border: none;
   font-size: 21px;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
+  padding: 10px 18px;
   text-align: left;
-  padding-left: 18px;
-  transition: 0.25s ease-in-out;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.25s;
 
   &:hover {
     background-color: #e8ffe8;
@@ -98,13 +86,57 @@ export const CategoryBtn = styled.button`
   }
 `;
 
+/* 🔍 SEARCH + SORT BAR */
+export const TopControlsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+`;
+
+export const SearchInput = styled.input`
+  width: 45%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 16px;
+
+  &:focus {
+    border-color: green;
+    box-shadow: 0px 0px 3px rgba(0, 128, 0, 0.4);
+  }
+
+  @media (max-width: 600px) {
+    width: 90%;
+  }
+`;
+
+export const SortSelect = styled.select`
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:focus {
+    border-color: green;
+    box-shadow: 0px 0px 3px rgba(0, 128, 0, 0.4);
+  }
+`;
+
 export const ProductsSection = styled.div`
-  flex: 1;
   display: grid;
   gap: 16px;
   padding-left: 16px;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  overflow-x: hidden;
 
   @media (max-width: 480px) {
     padding-left: 0;
@@ -118,7 +150,6 @@ export const ProductCard = styled.div`
   padding: 12px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
-  text-align: center;
 
   img {
     width: 100%;

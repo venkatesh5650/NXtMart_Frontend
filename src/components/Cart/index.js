@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaFacebook, FaPinterest, FaTwitter, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaPinterest,
+  FaTwitter,
+  FaInstagram,
+} from "react-icons/fa";
 
 import Header from "../Header";
 import CartItem from "../CartItem";
@@ -24,14 +29,19 @@ import {
 } from "./styledComponents";
 
 const Cart = () => {
+  const username = localStorage.getItem("username") || "guest";
+
+  const storageKey = `cartList_${username}`;
+
   const [Cartlist, setCartlist] = useState(
-    JSON.parse(localStorage.getItem("cartList")) || []
+    JSON.parse(localStorage.getItem(storageKey)) || []
   );
+
   const [TotalAmount, SetTotalAmount] = useState(0);
 
   const updateLocalStorage = (updated) => {
     setCartlist(updated);
-    localStorage.setItem("cartList", JSON.stringify(updated));
+    localStorage.setItem(storageKey, JSON.stringify(updated));
   };
 
   const increaseQuantity = (index) => {
@@ -62,7 +72,7 @@ const Cart = () => {
 
   const directToCheckout = () => {
     navigate("/Checkout");
-    localStorage.removeItem("cartList");
+    localStorage.removeItem(storageKey);
   };
 
   return (
@@ -92,7 +102,9 @@ const Cart = () => {
 
       {Cartlist.length > 0 && (
         <BillContainer>
-          <BillMsg>Total ({Cartlist.length} items): ₹ {TotalAmount}/-</BillMsg>
+          <BillMsg>
+            Total ({Cartlist.length} items): ₹ {TotalAmount}/-
+          </BillMsg>
           <CheckoutButton onClick={directToCheckout}>Checkout</CheckoutButton>
         </BillContainer>
       )}
@@ -105,10 +117,18 @@ const Cart = () => {
           </QueryText>
 
           <MediaContainer>
-            <Media><FaFacebook /></Media>
-            <Media><FaPinterest /></Media>
-            <Media><FaTwitter /></Media>
-            <Media><FaInstagram /></Media>
+            <Media>
+              <FaFacebook />
+            </Media>
+            <Media>
+              <FaPinterest />
+            </Media>
+            <Media>
+              <FaTwitter />
+            </Media>
+            <Media>
+              <FaInstagram />
+            </Media>
           </MediaContainer>
         </ContactMedia>
 
