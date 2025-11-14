@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import {
   DetailsContainer,
   DetailsWrapper,
@@ -19,13 +20,12 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      const token=Cookies.get("token");
       const response = await fetch(
         `https://nxtmartbackend-5.onrender.com/api/products/${id}`,
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTc1NzM0MzkyMCwiZXhwIjoxNzU3MzQ3NTIwfQ.pmTGmANtMPet80cnfp9-bcuM0V11xZ6ynMF50Qy0QXo",
+            Authorization: `Bearer ${token}`
           },
         }
       );

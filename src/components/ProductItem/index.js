@@ -30,7 +30,13 @@ const ProductItem = ({ productDetails, onAddCart, addCartMsg }) => {
           </ProductInfo>
 
           <div>
-            <AddCartBtn onClick={() => onAddCart(productDetails)}>
+            <AddCartBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onAddCart(productDetails);
+              }}
+            >
               Add to Cart
             </AddCartBtn>
             {addCartMsg && <CartMsg>{addCartMsg}</CartMsg>}
