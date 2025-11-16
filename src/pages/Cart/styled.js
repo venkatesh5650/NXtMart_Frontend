@@ -28,6 +28,10 @@ export const CartsView = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  @media (max-width: 768px) {
+   padding:15px;
+    width:100%;
+  }
 `;
 
 export const CartItemsContainer = styled.div`

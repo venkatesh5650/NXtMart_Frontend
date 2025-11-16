@@ -15,6 +15,8 @@ export const HomeSection = styled.div`
   padding: 12px;
 
   @media (max-width: 992px) {
+    margin: 0;
+    padding: 0;
     flex-direction: column;
   }
 `;
@@ -39,6 +41,10 @@ export const CategorySection = styled.div`
     position: static;
     display: flex;
     overflow-x: auto;
+    padding-top:0;
+    margin-top:0;
+   
+
   }
 `;
 
@@ -106,8 +112,9 @@ export const TopControlsContainer = styled.div`
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 10px;
-    width: 95%;
+    width: 97%;
     margin-top:10px;
+    padding-left:10px;
   }
 `;
 
@@ -126,7 +133,7 @@ export const SearchInput = styled.input`
   }
 
   @media (max-width: 600px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 

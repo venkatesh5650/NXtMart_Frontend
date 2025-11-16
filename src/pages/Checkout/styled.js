@@ -15,7 +15,8 @@ export const CheckoutContainer = styled.div`
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    padding-top: 70px;
+    padding-top: 60px;
+    padding:20px;
   }
 `;
 
