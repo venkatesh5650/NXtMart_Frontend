@@ -215,3 +215,11 @@ export const EmptyResults = styled.div`
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.card};
 `;
+
+export const LoaderContainer = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  color:green;
+  text-align: center;
+  margin-top: 30px;
+`;
