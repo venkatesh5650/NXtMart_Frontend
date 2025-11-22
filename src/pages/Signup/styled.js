@@ -40,6 +40,7 @@ export const SignUpCard = styled.div`
   align-items: center;
 
   @media (max-width: 600px) {
+    min-height: auto;
     width: 88%;
     padding: 12px;
   }

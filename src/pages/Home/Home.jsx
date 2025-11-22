@@ -18,6 +18,7 @@ import {
   ProductCard,
   MainContent,
   EmptyResults,
+  LoaderContainer,
 } from "./styled";
 
 const categoriesList = [
@@ -41,6 +42,7 @@ const Home = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchInput, setSearchInput] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const username = localStorage.getItem("username") || "guest";
   const storageKey = `cartList_${username}`;
@@ -81,6 +83,8 @@ const Home = () => {
    */
   useEffect(() => {
     const loadProducts = async () => {
+      setIsLoading(true); // show loader
+
       const orderBy = sortOrder === "" ? "id" : "price";
       const order = sortOrder === "" ? "ASC" : sortOrder;
 
@@ -95,6 +99,8 @@ const Home = () => {
         const data = await response.json();
         setProductsData(data);
       }
+
+      setIsLoading(false); // remove loader
     };
 
     loadProducts();
@@ -146,9 +152,11 @@ const Home = () => {
             </TopControlsContainer>
 
             <ProductsSection $empty={productsData.length === 0}>
-              {productsData.length === 0 && (
+              {isLoading ? (
+                <LoaderContainer>Loading...</LoaderContainer>
+              ) : productsData.length === 0 ? (
                 <EmptyResults>No Results Found</EmptyResults>
-              )}
+              ) : null}
 
               {productsData.map((product) => {
                 const cartItem = cartList.find((x) => x.id === product.id);
