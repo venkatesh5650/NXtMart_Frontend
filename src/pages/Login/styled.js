@@ -7,7 +7,6 @@ export const LoginContainer = styled.div`
   min-height: 100vh;
   padding: 20px;
 
-  /* Background always same image (not theme dependent) */
   background-image: url("https://res.cloudinary.com/dpiu7mohv/image/upload/v1756465869/Background_po1fpj.png");
   background-size: cover;
   background-position: center;
@@ -20,8 +19,8 @@ export const LoginContainer = styled.div`
 export const LoginCard = styled.div`
   background: ${({ theme }) =>
     theme.background === "#ffffff"
-      ? "rgba(255,255,255,0.92)" /* Light mode */
-      : "rgba(20,20,20,0.92)"}; /* Dark mode */
+      ? "rgba(255,255,255,0.92)"
+      : "rgba(20,20,20,0.92)"};
 
   backdrop-filter: blur(6px);
   border-radius: 10px;
@@ -50,7 +49,6 @@ export const LoginTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-
   color: ${({ theme }) =>
     theme.background === "#ffffff" ? "darkgreen" : "white"};
 `;
@@ -98,11 +96,11 @@ export const LoginInput = styled.input`
   font-size: 16px;
 
   color: ${({ theme }) => (theme.background === "#ffffff" ? "black" : "white")};
-
   background: transparent;
 
   &::placeholder {
-    color: ${({ theme }) => (theme.background === "#ffffff" ? "#666" : "#aaa")};
+    color: ${({ theme }) =>
+      theme.background === "#ffffff" ? "#666" : "#aaa"};
   }
 
   @media (min-width: 600px) {
@@ -113,8 +111,8 @@ export const LoginInput = styled.input`
 export const Label = styled.label`
   font-size: 15px;
   font-weight: 500;
-
-  color: ${({ theme }) => (theme.background === "#ffffff" ? "black" : "white")};
+  color: ${({ theme }) =>
+    theme.background === "#ffffff" ? "black" : "white"};
 `;
 
 export const PasswordRow = styled.div`
@@ -135,12 +133,6 @@ export const PasswordRow = styled.div`
     height: 18px;
     accent-color: green;
     cursor: pointer;
-  }
-
-  @media (max-width: 600px) {
-    label {
-      font-size: 13px;
-    }
   }
 `;
 
@@ -184,9 +176,7 @@ export const DemoLoginButton = styled.button`
   width: 100%;
   background-color: ${({ theme }) =>
     theme.background === "#ffffff" ? "#e6e6e6" : "#444"};
-
   color: ${({ theme }) => (theme.background === "#ffffff" ? "#333" : "white")};
-
   padding: 10px;
   border-radius: 6px;
   border: none;
@@ -214,4 +204,13 @@ export const LoginErrorText = styled.p`
   text-align: left;
   margin-bottom: 8px;
   margin-top: -8px;
+`;
+
+
+export const LoadingText = styled.p`
+  text-align: center;
+  color: green;
+  margin-top: 12px;
+  font-size: 15px;
+  font-weight: 500;
 `;

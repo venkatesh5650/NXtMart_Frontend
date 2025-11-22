@@ -3,8 +3,8 @@ import { CgProfile } from "react-icons/cg";
 import { TbLockPassword } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { loginSchema } from "../../validators/validation.js"; // ⭐ Added
-import { loginUser } from "../../api/auth"; // ⭐ NEW
+import { loginSchema } from "../../validators/validation.js";
+import { loginUser } from "../../api/auth";
 
 import {
   LoginContainer,
@@ -22,7 +22,8 @@ import {
   ErrorMsg,
   PasswordRow,
   DemoLoginButton,
-  LoginErrorText, // ⭐ NEW
+  LoginErrorText,
+  LoadingText,
 } from "./styled.js";
 
 const Login = () => {
@@ -31,7 +32,8 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [failureMsg, setFailureMsg] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({}); // ⭐ Added
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -47,7 +49,6 @@ const Login = () => {
 
   const RedirectToSignup = () => navigate("/signup");
 
-  // ⭐ Simple validation function
   const validateForm = () => {
     const result = loginSchema.safeParse({ username, password });
 
@@ -58,10 +59,8 @@ const Login = () => {
 
     const errors = {};
     result.error.issues.forEach((err) => {
-      const fieldName = err.path[0];
-      errors[fieldName] = err.message;
+      errors[err.path[0]] = err.message;
     });
-
     setFieldErrors(errors);
     return false;
   };
@@ -69,8 +68,12 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     setFailureMsg("");
+    setLoading(true); // show loading text
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      setLoading(false); // stop loading if validation fails
+      return;
+    }
 
     try {
       const response = await loginUser({ username, password });
@@ -84,6 +87,8 @@ const Login = () => {
       }
     } catch (err) {
       console.log("Login Error:", err);
+    } finally {
+      setLoading(false); // hide loading text
     }
   };
 
@@ -101,7 +106,6 @@ const Login = () => {
 
         <LoginForm onSubmit={handleLogin}>
           <AllInputContainer>
-            {/* USERNAME */}
             <Label>Username</Label>
             <InputContainer>
               <CgProfile size={20} color="gray" />
@@ -115,7 +119,6 @@ const Login = () => {
               <LoginErrorText>{fieldErrors.username}</LoginErrorText>
             )}
 
-            {/* PASSWORD */}
             <Label>Password</Label>
             <InputContainer>
               <TbLockPassword size={20} color="gray" />
@@ -148,7 +151,7 @@ const Login = () => {
                 SignUp
               </SignupButton>
             </ButtonRow>
-
+            {loading && <LoadingText>Loading...</LoadingText>}
             {failureMsg && <ErrorMsg>{failureMsg}</ErrorMsg>}
           </AllInputContainer>
         </LoginForm>
