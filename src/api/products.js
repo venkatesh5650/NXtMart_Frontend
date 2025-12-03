@@ -2,8 +2,7 @@
 import Cookies from "js-cookie";
 
 /**
- * Fetch products with optional filters.
- * Keeping this API layer separate improves scalability and testability.
+ * Fetch products with optional filters + pagination.
  */
 export const fetchProducts = async (queryString = "") => {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -18,7 +17,6 @@ export const fetchProducts = async (queryString = "") => {
 
 /**
  * Fetch a single product by ID.
- * Centralizing fetch logic avoids duplication across components.
  */
 export const fetchProductDetails = async (id) => {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -32,15 +30,17 @@ export const fetchProductDetails = async (id) => {
 };
 
 /**
- * Fetch similar products belonging to the same category.
- * Encapsulated API utility ensures consistent token usage.
+ * ✅ ✅ FIXED: Fetch similar products with pagination support
+ * (This was the missing part causing similar products to not render)
  */
 export const fetchSimilarProducts = async (category) => {
   const API_URL = process.env.REACT_APP_API_URL;
   const token = Cookies.get("jwt_token");
 
   return fetch(
-    `${API_URL}/api/products?category=${encodeURIComponent(category)}`,
+    `${API_URL}/api/products?category=${encodeURIComponent(
+      category
+    )}&page=1&limit=6`,   // ✅ PAGINATION ADDED
     {
       headers: { Authorization: `Bearer ${token}` },
     }

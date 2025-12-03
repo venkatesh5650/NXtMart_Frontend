@@ -80,8 +80,9 @@ const ProductDetails = () => {
     const loadSimilar = async () => {
       const response = await fetchSimilarProducts(item.category);
       let data = await response.json();
-      data = data.filter((p) => p.id !== item.id);
-      setSimilarProducts(data);
+      let products = data.products || [];
+      products = products.filter((p) => p.id !== item.id);
+      setSimilarProducts(products);
     };
 
     loadSimilar();
