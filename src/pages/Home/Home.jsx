@@ -19,6 +19,8 @@ import {
   MainContent,
   EmptyResults,
   LoaderContainer,
+  PaginationContainer,
+  PageButton,
 } from "./styled";
 
 const categoriesList = [
@@ -32,17 +34,17 @@ const categoriesList = [
   { categoryId: 8, categoryName: "Beverages" },
 ];
 
-/**
- * Home Page:
- * Combines category filtering, search, sorting and product listing
- * in a single controlled UI state — keeping everything predictable.
- */
 const Home = () => {
   const [productsData, setProductsData] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchInput, setSearchInput] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  //  PAGINATION STATE (ADDED)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
 
   const username = localStorage.getItem("username") || "guest";
   const storageKey = `cartList_${username}`;
@@ -51,7 +53,6 @@ const Home = () => {
     JSON.parse(localStorage.getItem(storageKey)) || []
   );
 
-  // Add products to cart while keeping quantity + UI message consistent
   const onAddCart = (product) => {
     const cart = [...cartList];
     const index = cart.findIndex((item) => item.id === product.id);
@@ -77,18 +78,14 @@ const Home = () => {
     }, 2000);
   };
 
-  /**
-   * Fetch products whenever search/category/sorting changes.
-   * Keeps data loading reactive and UI fully state-driven.
-   */
   useEffect(() => {
     const loadProducts = async () => {
-      setIsLoading(true); // show loader
+      setIsLoading(true);
 
       const orderBy = sortOrder === "" ? "id" : "price";
       const order = sortOrder === "" ? "ASC" : sortOrder;
 
-      let query = `search_q=${searchInput}&order_by=${orderBy}&order=${order}`;
+      let query = `search_q=${searchInput}&order_by=${orderBy}&order=${order}&page=${currentPage}&limit=${limit}`;
 
       if (activeCategory !== "All") {
         query += `&category=${encodeURIComponent(activeCategory)}`;
@@ -97,20 +94,20 @@ const Home = () => {
       const response = await fetchProducts(query);
       if (response.ok) {
         const data = await response.json();
-        setProductsData(data);
+        setProductsData(data.products);       
+        setTotalPages(data.totalPages);       
       }
 
-      setIsLoading(false); // remove loader
+      setIsLoading(false);
     };
 
     loadProducts();
-  }, [activeCategory, searchInput, sortOrder]);
+  }, [activeCategory, searchInput, sortOrder, currentPage]);
 
   return (
     <MainLayout>
       <HomeContainer>
         <HomeSection>
-          {/* Category Navigation Sidebar */}
           <CategorySection>
             <CategoryHeader>Categories</CategoryHeader>
 
@@ -119,7 +116,10 @@ const Home = () => {
                 <CategoryItem key={cat.categoryId}>
                   <CategoryBtn
                     $active={activeCategory === cat.categoryName}
-                    onClick={() => setActiveCategory(cat.categoryName)}
+                    onClick={() => {
+                      setActiveCategory(cat.categoryName);
+                      setCurrentPage(1);   // RESET PAGE ON FILTER CHANGE
+                    }}
                   >
                     {cat.categoryName}
                   </CategoryBtn>
@@ -128,7 +128,6 @@ const Home = () => {
             </CategoryContainer>
           </CategorySection>
 
-          {/* Product Listing + Filters */}
           <MainContent>
             <TopControlsContainer>
               <SearchInput
@@ -137,13 +136,16 @@ const Home = () => {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") setSearchInput(e.target.value);
+                  if (e.key === "Enter") setCurrentPage(1); 
                 }}
               />
 
               <SortSelect
                 value={sortOrder}
-                onChange={(e) => setSortOrder(e.target.value)}
+                onChange={(e) => {
+                  setSortOrder(e.target.value);
+                  setCurrentPage(1); 
+                }}
               >
                 <option value="">Sort Price</option>
                 <option value="ASC">Low → High</option>
@@ -172,6 +174,35 @@ const Home = () => {
                 );
               })}
             </ProductsSection>
+
+            {/*PAGINATION BUTTONS (GREEN - NXT MART THEME) */}
+            {totalPages > 1 && (
+              <PaginationContainer>
+                <PageButton
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => p - 1)}
+                >
+                  Prev
+                </PageButton>
+
+                {[...Array(totalPages)].map((_, index) => (
+                  <PageButton
+                    key={index}
+                    $active={currentPage === index + 1}
+                    onClick={() => setCurrentPage(index + 1)}
+                  >
+                    {index + 1}
+                  </PageButton>
+                ))}
+
+                <PageButton
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => p + 1)}
+                >
+                  Next
+                </PageButton>
+              </PaginationContainer>
+            )}
           </MainContent>
         </HomeSection>
       </HomeContainer>

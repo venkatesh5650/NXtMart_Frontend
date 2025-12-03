@@ -41,10 +41,8 @@ export const CategorySection = styled.div`
     position: static;
     display: flex;
     overflow-x: auto;
-    padding-top:0;
-    margin-top:0;
-   
-
+    padding-top: 0;
+    margin-top: 0;
   }
 `;
 
@@ -113,8 +111,8 @@ export const TopControlsContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     width: 97%;
-    margin-top:10px;
-    padding-left:10px;
+    margin-top: 10px;
+    padding-left: 10px;
   }
 `;
 
@@ -219,7 +217,40 @@ export const EmptyResults = styled.div`
 export const LoaderContainer = styled.div`
   font-size: 20px;
   font-weight: 600;
-  color:green;
+  color: green;
   text-align: center;
   margin-top: 30px;
+`;
+
+export const PaginationContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 25px 0 40px;
+  flex-wrap: wrap;
+`;
+
+export const PageButton = styled.button`
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid green;
+  background: ${(p) => (p.$active ? "green" : "transparent")};
+  color: ${(p) => (p.$active ? "white" : "green")};
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: green;
+    color: white;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: transparent;
+    color: green;
+  }
 `;
