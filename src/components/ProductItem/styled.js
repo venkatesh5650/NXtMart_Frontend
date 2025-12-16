@@ -147,15 +147,12 @@ export const Controller = styled.div`
   gap: 8px;
   padding-right: 5px;
   border-radius: 6px;
-  background-color: white;
 
   @media (max-width: 480px) {
-  flex-direction: row;
-  padding-left:10px;
-}
+    flex-direction: row;
+    padding-left: 10px;
+  }
 `;
-
-
 
 export const ControlButton = styled.button`
   width: 28px;
