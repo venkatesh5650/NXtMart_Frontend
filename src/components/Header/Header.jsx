@@ -14,11 +14,18 @@ import {
   NavButton,
   MobileMenuIcon,
   MobileNavMenu,
+  CartBadge,
 } from "./styled";
 
 const Header = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const cartItemCount =
+    JSON.parse(
+      localStorage.getItem(
+        `cartList_${localStorage.getItem("username") || "guest"}`
+      )
+    )?.length || 0;
 
   const theme = useTheme();
 
@@ -42,7 +49,9 @@ const Header = () => {
           <NavButton onClick={() => navigate("/")}>Home</NavButton>
         </NavItem>
         <NavItem>
-          <NavButton onClick={() => navigate("/cart")}>Cart</NavButton>
+          <NavButton onClick={() => navigate("/cart")}>
+            Cart{cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
+          </NavButton>
         </NavItem>
         <NavItem>
           <NavButton onClick={logout}>Logout</NavButton>
@@ -60,7 +69,9 @@ const Header = () => {
       {menuOpen && (
         <MobileNavMenu>
           <NavButton onClick={() => navigate("/")}>Home</NavButton>
-          <NavButton onClick={() => navigate("/cart")}>Cart</NavButton>
+          <NavButton onClick={() => navigate("/cart")}>
+            Cart {cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
+          </NavButton>
           <NavButton onClick={logout}>Logout</NavButton>
         </MobileNavMenu>
       )}

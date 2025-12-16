@@ -89,10 +89,11 @@ export const CategoryBtn = styled.button`
   transition: 0.25s;
 
   &:hover {
-    background-color: #e8ffe8;
+    background-color: green;
     transform: scale(1.03);
+    color: black;
   }
-
+// #e8ffe8
   @media (max-width: 992px) {
     font-size: 18px;
     padding: 8px 12px;
@@ -115,6 +116,8 @@ export const TopControlsContainer = styled.div`
     padding-left: 10px;
   }
 `;
+
+
 
 export const SearchInput = styled.input`
   width: 45%;
@@ -149,6 +152,8 @@ export const SortSelect = styled.select`
     box-shadow: 0px 0px 3px rgba(0, 128, 0, 0.4);
   }
 `;
+
+
 
 export const MainContent = styled.div`
   flex: 1;

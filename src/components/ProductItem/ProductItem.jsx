@@ -7,14 +7,21 @@ import {
   ProductQuantity,
   ProductPrice,
   AddCartBtn,
-  CartMsg,
   ProductLink, // styled Link replacing inline styles
+  Controller,
+  ControlButton,
+  Quantity,
 } from "./styled";
 
-const ProductItem = ({ productDetails, onAddCart, addCartMsg }) => {
+const ProductItem = ({
+  productDetails,
+  cartQuantity,
+  onAddCart,
+  onIncrease,
+  onDecrease,
+}) => {
   const { name, price, quantity, image_url, id } = productDetails;
 
-  // Keep navigation on card click, but prevent navigation when clicking Add to Cart
   return (
     <ProductLink to={`/product/${id}`}>
       <ProductWrapper>
@@ -27,19 +34,26 @@ const ProductItem = ({ productDetails, onAddCart, addCartMsg }) => {
             <ProductPrice>₹ {price}</ProductPrice>
           </ProductInfo>
 
-          <div>
-            <AddCartBtn
-              onClick={(e) => {
-                // Prevent Link navigation when Add to Cart button is clicked
-                e.preventDefault();
-                e.stopPropagation();
-                onAddCart(productDetails);
-              }}
-            >
-              Add to Cart
-            </AddCartBtn>
+          {/* CART ACTION AREA */}
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            {cartQuantity === 0 ? (
+              <AddCartBtn onClick={() => onAddCart(productDetails)}>
+                Add to Cart
+              </AddCartBtn>
+            ) : (
+              <Controller>
+                <ControlButton onClick={() => onDecrease(id)}>-</ControlButton>
 
-            {addCartMsg && <CartMsg>{addCartMsg}</CartMsg>}
+                <Quantity>{cartQuantity}</Quantity>
+
+                <ControlButton onClick={() => onIncrease(id)}>+</ControlButton>
+              </Controller>
+            )}
           </div>
         </DetailsSection>
       </ProductWrapper>

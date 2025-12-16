@@ -139,3 +139,44 @@ export const CartMsg = styled.p`
   text-align: center;
   color: green;
 `;
+
+export const Controller = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-right: 5px;
+  border-radius: 6px;
+  background-color: white;
+
+  @media (max-width: 480px) {
+  flex-direction: row;
+  padding-left:10px;
+}
+`;
+
+
+
+export const ControlButton = styled.button`
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background-color: ${({ theme }) =>
+    theme.background === "#ffffff" ? "green" : "black"};
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: green;
+  }
+`;
+// #504a4c
+
+export const Quantity = styled.span`
+  min-width: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: black;
+`;

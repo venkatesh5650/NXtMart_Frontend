@@ -29,8 +29,8 @@ export const CartsView = styled.div`
   width: 100%;
   height: 100%;
   @media (max-width: 768px) {
-   padding:15px;
-    width:100%;
+    padding: 15px;
+    width: 100%;
   }
 `;
 
@@ -231,7 +231,7 @@ export const ItemCount = styled.span`
   background: green;
   color: white;
   padding: 6px 12px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 18px;
   font-weight: 600;
   white-space: nowrap;

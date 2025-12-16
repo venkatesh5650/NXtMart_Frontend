@@ -78,6 +78,30 @@ const Home = () => {
     }, 2000);
   };
 
+  const increaseCartQty = (productId) => {
+    const updated = cartList.map((item) =>
+      item.id === productId
+        ? { ...item, cartQuantity: item.cartQuantity + 1 }
+        : item
+    );
+
+    setCartList(updated);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  };
+
+  const decreaseCartQty = (productId) => {
+    const updated = cartList
+      .map((item) =>
+        item.id === productId
+          ? { ...item, cartQuantity: item.cartQuantity - 1 }
+          : item
+      )
+      .filter((item) => item.cartQuantity > 0);
+
+    setCartList(updated);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  };
+
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
@@ -94,8 +118,8 @@ const Home = () => {
       const response = await fetchProducts(query);
       if (response.ok) {
         const data = await response.json();
-        setProductsData(data.products);       
-        setTotalPages(data.totalPages);       
+        setProductsData(data.products);
+        setTotalPages(data.totalPages);
       }
 
       setIsLoading(false);
@@ -118,7 +142,7 @@ const Home = () => {
                     $active={activeCategory === cat.categoryName}
                     onClick={() => {
                       setActiveCategory(cat.categoryName);
-                      setCurrentPage(1);   // RESET PAGE ON FILTER CHANGE
+                      setCurrentPage(1); // RESET PAGE ON FILTER CHANGE
                     }}
                   >
                     {cat.categoryName}
@@ -136,7 +160,7 @@ const Home = () => {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") setCurrentPage(1); 
+                  if (e.key === "Enter") setCurrentPage(1);
                 }}
               />
 
@@ -144,13 +168,14 @@ const Home = () => {
                 value={sortOrder}
                 onChange={(e) => {
                   setSortOrder(e.target.value);
-                  setCurrentPage(1); 
+                  setCurrentPage(1);
                 }}
               >
                 <option value="">Sort Price</option>
                 <option value="ASC">Low → High</option>
                 <option value="DESC">High → Low</option>
               </SortSelect>
+              
             </TopControlsContainer>
 
             <ProductsSection $empty={productsData.length === 0}>
@@ -167,8 +192,10 @@ const Home = () => {
                   <ProductCard key={product.id}>
                     <ProductItem
                       productDetails={product}
+                      cartQuantity={cartItem?.cartQuantity || 0}
                       onAddCart={onAddCart}
-                      addCartMsg={cartItem?.addCartMsg || ""}
+                      onIncrease={increaseCartQty}
+                      onDecrease={decreaseCartQty}
                     />
                   </ProductCard>
                 );

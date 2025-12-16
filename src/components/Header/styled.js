@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   background-color: ${({ theme }) =>
-    theme.background === "#ffffff" ? "#f2f4f7" : "#0b0b0b"}; 
+    theme.background === "#ffffff" ? "#f2f4f7" : "#0b0b0b"};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,8 +37,7 @@ export const Tagline = styled.p`
   font-weight: 600;
 
   /* Light → default green | Dark → green */
-  color: ${({ theme }) =>
-    theme.background === "#ffffff" ? "green" : "green"};
+  color: ${({ theme }) => (theme.background === "#ffffff" ? "green" : "green")};
 
   margin: 0 auto;
   white-space: nowrap;
@@ -69,8 +68,7 @@ export const NavButton = styled.button`
   border: none;
 
   /* Light → green | Dark → green */
-  color: ${({ theme }) =>
-    theme.background === "#ffffff" ? "green" : "green"};
+  color: ${({ theme }) => (theme.background === "#ffffff" ? "green" : "green")};
 
   font-size: 16px;
   cursor: pointer;
@@ -84,12 +82,25 @@ export const NavButton = styled.button`
   }
 `;
 
+export const CartBadge = styled.span`
+
+  background-color: green; /* NxtMart green */
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 2px 6px;
+  margin-left: 6px;
+  margin-bottom: 1px;
+  min-width: 18px;
+  text-align: center;
+`;
+// #22c55e
 export const MobileMenuIcon = styled.div`
   display: none;
 
   /* Light → green | Dark → green */
-  color: ${({ theme }) =>
-    theme.background === "#ffffff" ? "green" : "green"};
+  color: ${({ theme }) => (theme.background === "#ffffff" ? "green" : "green")};
 
   cursor: pointer;
 
@@ -115,8 +126,7 @@ export const MobileNavMenu = styled.div`
   align-items: center;
 
   border-bottom: 1px solid
-    ${({ theme }) =>
-      theme.background === "#ffffff" ? "#d1d5db" : "green"};
+    ${({ theme }) => (theme.background === "#ffffff" ? "#d1d5db" : "green")};
 
   animation: slideDown 0.3s ease-in-out;
 
