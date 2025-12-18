@@ -147,6 +147,9 @@ export const AddCartBtn = styled.button`
 `;
 
 export const BackBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 12px 22px;
 
   background: ${({ theme }) =>
@@ -173,8 +176,54 @@ export const CartMsg = styled.p`
   text-align: center;
 `;
 
-/* Loading text uses the project's theme and keeps markup consistent */
 export const LoadingText = styled.h2`
   color: green;
   margin: 40px 0;
+`;
+
+export const QuantityController = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 7px;
+`;
+
+export const QuantityBtn = styled.button`
+  width: 186px;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+  background-color: green;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: green;
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 768px) {
+    width: 130px;
+  }
+`;
+
+/* Quantity Text */
+export const QuantityText = styled.span`
+  font-size: 36px;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+  color: black;
 `;

@@ -169,7 +169,7 @@ export const ControlButton = styled.button`
     background-color: green;
   }
 `;
-// #504a4c
+
 
 export const Quantity = styled.span`
   min-width: 20px;

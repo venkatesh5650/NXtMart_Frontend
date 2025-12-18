@@ -15,7 +15,10 @@ import {
   AddCartBtn,
   BackBtn,
   CartMsg,
-  LoadingText, // new styled component for consistent style
+  LoadingText,
+  QuantityController,
+  QuantityBtn,
+  QuantityText,
 } from "./styled";
 
 import SimilarProducts from "../../components/SimilarProducts/SimilarProducts.jsx";
@@ -39,6 +42,32 @@ const ProductDetails = () => {
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem(storageKey)) || []
   );
+
+  const cartItem = cartList.find((p) => p.id === item?.id);
+  const quantity = cartItem?.cartQuantity || 0;
+
+  const increaseQuantity = () => {
+    const updated = [...cartList];
+    const index = updated.findIndex((p) => p.id === item.id);
+    updated[index].cartQuantity += 1;
+
+    setCartList(updated);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  };
+
+  const decreaseQuantity = () => {
+    const updated = [...cartList];
+    const index = updated.findIndex((p) => p.id === item.id);
+
+    if (updated[index].cartQuantity > 1) {
+      updated[index].cartQuantity -= 1;
+    } else {
+      updated.splice(index, 1); // remove from cart
+    }
+
+    setCartList(updated);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  };
 
   // Add to cart: update quantity if exists, otherwise push new item.
   // State + localStorage are kept in sync for persistence.
@@ -115,7 +144,16 @@ const ProductDetails = () => {
 
               <Description>{item.description}</Description>
 
-              <AddCartBtn onClick={onAddCart}>Add to Cart</AddCartBtn>
+              {quantity === 0 ? (
+                <AddCartBtn onClick={onAddCart}>Add to Cart</AddCartBtn>
+              ) : (
+                <QuantityController>
+                  <QuantityBtn onClick={decreaseQuantity}>-</QuantityBtn>
+                  <QuantityText>{quantity}</QuantityText>
+                  <QuantityBtn onClick={increaseQuantity}>+</QuantityBtn>
+                </QuantityController>
+              )}
+
               {cartMsg && <CartMsg>{cartMsg}</CartMsg>}
 
               <BackBtn onClick={() => navigate(-1)}>← Back</BackBtn>

@@ -1,5 +1,81 @@
 import styled from "styled-components";
 
+import { FaShoppingCart } from "react-icons/fa";
+
+/* Desktop Cart Icon Wrapper */
+export const DesktopCartWrapper = styled.span`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+/* Desktop Cart Icon */
+export const DesktopCartIcon = styled(FaShoppingCart)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.text};
+`;
+
+/* Desktop Cart Badge */
+export const DesktopCartBadge = styled.span`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+
+  min-width: 16px;
+  height: 16px;
+
+  background-color: #ff3b30;
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+`;
+
+/* Mobile Cart Wrapper */
+export const MobileCartWrapper = styled.div`
+  display: none;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+/* Cart Icon */
+export const MobileCartIcon = styled(FaShoppingCart)`
+  font-size: 22px;
+  color: ${({ theme }) => theme.text};
+`;
+
+/* Cart Count Badge */
+export const MobileCartBadge = styled.span`
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #ff3b30;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 50%;
+  line-height: 1;
+`;
+
 export const HeaderContainer = styled.header`
   background-color: ${({ theme }) =>
     theme.background === "#ffffff" ? "#f2f4f7" : "#0b0b0b"};
@@ -45,6 +121,11 @@ export const Tagline = styled.p`
   @media (max-width: 768px) {
     display: none;
   }
+
+  &:hover {
+    color: ${({ theme }) =>
+      theme.background === "#ffffff" ? "black" : "white"};
+  }
 `;
 
 export const NavContainer = styled.ul`
@@ -83,7 +164,6 @@ export const NavButton = styled.button`
 `;
 
 export const CartBadge = styled.span`
-
   background-color: green; /* NxtMart green */
   color: #fff;
   font-size: 12px;

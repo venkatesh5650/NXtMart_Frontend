@@ -7,6 +7,12 @@ import { useTheme } from "styled-components";
 
 import {
   HeaderContainer,
+  MobileCartWrapper,
+  MobileCartIcon,
+  MobileCartBadge,
+  DesktopCartWrapper,
+  DesktopCartIcon,
+  DesktopCartBadge,
   Logo,
   Tagline,
   NavContainer,
@@ -14,7 +20,6 @@ import {
   NavButton,
   MobileMenuIcon,
   MobileNavMenu,
-  CartBadge,
 } from "./styled";
 
 const Header = () => {
@@ -50,7 +55,13 @@ const Header = () => {
         </NavItem>
         <NavItem>
           <NavButton onClick={() => navigate("/cart")}>
-            Cart{cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
+            Cart
+            {cartItemCount > 0 && (
+              <DesktopCartWrapper>
+                <DesktopCartIcon />
+                <DesktopCartBadge>{cartItemCount}</DesktopCartBadge>
+              </DesktopCartWrapper>
+            )}
           </NavButton>
         </NavItem>
         <NavItem>
@@ -58,20 +69,29 @@ const Header = () => {
         </NavItem>
       </NavContainer>
 
-      <MobileMenuIcon onClick={() => setMenuOpen((prev) => !prev)}>
-        {menuOpen ? (
-          <IoClose size={28} color={theme.text} />
-        ) : (
-          <GiHamburgerMenu size={28} color={theme.text} />
-        )}
-      </MobileMenuIcon>
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+     
+        <MobileCartWrapper onClick={() => navigate("/cart")}>
+          <MobileCartIcon />
+          {cartItemCount > 0 && (
+            <MobileCartBadge>{cartItemCount}</MobileCartBadge>
+          )}
+        </MobileCartWrapper>
+
+   
+        <MobileMenuIcon onClick={() => setMenuOpen((prev) => !prev)}>
+          {menuOpen ? (
+            <IoClose size={28} color={theme.text} />
+          ) : (
+            <GiHamburgerMenu size={28} color={theme.text} />
+          )}
+        </MobileMenuIcon>
+      </div>
 
       {menuOpen && (
         <MobileNavMenu>
           <NavButton onClick={() => navigate("/")}>Home</NavButton>
-          <NavButton onClick={() => navigate("/cart")}>
-            Cart {cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
-          </NavButton>
+          <NavButton onClick={() => navigate("/cart")}>Cart</NavButton>
           <NavButton onClick={logout}>Logout</NavButton>
         </MobileNavMenu>
       )}
