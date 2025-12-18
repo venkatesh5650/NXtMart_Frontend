@@ -32,6 +32,11 @@ function App() {
     if (saved) setTheme(saved);
   }, []);
 
+  // Warm up backend to avoid cold-start delay on first user action
+  useEffect(() => {
+    fetch("https://your-backend.onrender.com/health");
+  }, []);
+
   /**
    * Toggle between light and dark mode.
    * Stored in localStorage to sync theme across refreshes.
