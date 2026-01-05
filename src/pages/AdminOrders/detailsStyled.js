@@ -1,12 +1,16 @@
 import styled from "styled-components";
 
+/* ---------- Page ---------- */
+
 export const Page = styled.div`
-  padding: 14px;
-  max-width: 900px;
-  margin: auto;
+  padding: 10px;
+  max-width: 100%;
+  overflow-x: hidden;
 
   @media (min-width: 768px) {
     padding: 20px 24px;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
   @media (min-width: 1280px) {
@@ -14,13 +18,15 @@ export const Page = styled.div`
   }
 `;
 
+/* ---------- Back ---------- */
+
 export const BackButton = styled.button`
   background: transparent;
   border: none;
   color: #2563eb;
   cursor: pointer;
-  font-size: 13px;
-  margin-bottom: 8px;
+  font-size: 12px;
+  margin-bottom: 6px;
   padding: 4px 0;
 
   &:hover {
@@ -32,18 +38,22 @@ export const BackButton = styled.button`
   }
 `;
 
+/* ---------- Title ---------- */
+
 export const Title = styled.h1`
-  margin-bottom: 14px;
-  font-size: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
 
   @media (min-width: 768px) {
     font-size: 24px;
   }
 `;
 
+/* ---------- Section ---------- */
+
 export const Section = styled.div`
-  margin-bottom: 18px;
-  padding: 14px;
+  margin-bottom: 14px;
+  padding: 12px;
   border-radius: 12px;
   background: ${({ theme }) =>
     theme.background === "#ffffff" ? "#f8fafc" : "#0f172a"};
@@ -53,12 +63,14 @@ export const Section = styled.div`
   }
 `;
 
+/* ---------- Status ---------- */
+
 export const Status = styled.span`
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 999px;
   background: ${({ color }) => color};
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   white-space: nowrap;
 
   @media (min-width: 768px) {
@@ -66,10 +78,12 @@ export const Status = styled.span`
   }
 `;
 
+/* ---------- Summary ---------- */
+
 export const SummaryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
@@ -80,30 +94,30 @@ export const SummaryItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 13px;
+  font-size: 12px;
 
   @media (min-width: 768px) {
     font-size: 14px;
   }
 `;
 
+/* ---------- Items ---------- */
+
 export const ItemsTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
-  min-width: 520px;
+  margin-top: 8px;
 
   th,
   td {
     border-bottom: 1px solid #cbd5e1;
-    padding: 8px;
+    padding: 6px 8px;
     text-align: left;
-    font-size: 12px;
+    font-size: 11px;
     white-space: nowrap;
   }
 
   th {
-    font-size: 12px;
     color: #64748b;
   }
 
@@ -111,14 +125,17 @@ export const ItemsTable = styled.table`
     th,
     td {
       font-size: 13px;
+      padding: 8px 10px;
     }
   }
 `;
 
+/* ---------- Total ---------- */
+
 export const TotalRow = styled.div`
-  margin-top: 10px;
+  margin-top: 8px;
   text-align: right;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
 
   @media (min-width: 768px) {
@@ -126,21 +143,23 @@ export const TotalRow = styled.div`
   }
 `;
 
+/* ---------- Actions ---------- */
+
 export const ActionsRow = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   flex-wrap: wrap;
 `;
 
 export const ActionButton = styled.button`
-  padding: 7px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: none;
-  background: #00ff00;
+  background: #22c55e;
   color: white;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
 
   &:disabled {
     background: #94a3b8;

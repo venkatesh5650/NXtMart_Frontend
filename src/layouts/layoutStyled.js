@@ -1,13 +1,17 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
+/* ---------- Root ---------- */
+
 export const LayoutWrapper = styled.div`
-  display: flex;
   min-height: 100vh;
   background: ${({ theme }) => theme.background};
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
-/* ---------------- Top Bar ---------------- */
+/* ---------- Top Bar ---------- */
 
 export const TopBar = styled.header`
   position: fixed;
@@ -22,25 +26,26 @@ export const TopBar = styled.header`
   justify-content: space-between;
   padding: 0 14px;
   z-index: 1000;
-
-  @media (min-width: 768px) {
-    height: 60px;
-    padding: 0 20px;
-  }
-
-  @media (min-width: 1280px) {
-    padding: 0 32px;
-  }
 `;
+
+/* ---------- Body Wrapper ---------- */
+
+export const AppContainer = styled.div`
+  display: flex;
+  margin-top: 56px; /* Push content below header */
+  min-height: calc(100vh - 56px);
+  max-width: 1440px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+/* ---------- Brand ---------- */
 
 export const Brand = styled.div`
   font-weight: 600;
   font-size: 14px;
   color: ${({ theme }) => theme.text};
-
-  @media (min-width: 768px) {
-    font-size: 15px;
-  }
 `;
 
 export const MenuButton = styled.button`
@@ -48,11 +53,9 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;
+
+/* ---------- Actions ---------- */
 
 export const RightActions = styled.div`
   display: flex;
@@ -60,11 +63,6 @@ export const RightActions = styled.div`
   gap: 10px;
   font-size: 11px;
   color: ${({ theme }) => theme.mutedText};
-
-  @media (min-width: 768px) {
-    font-size: 12px;
-    gap: 12px;
-  }
 `;
 
 export const LogoutButton = styled.button`
@@ -77,43 +75,39 @@ export const LogoutButton = styled.button`
   background: transparent;
   color: ${({ theme }) => theme.text};
   cursor: pointer;
-  font-size: 12px;
-
-  &:hover {
-    background: ${({ theme }) => theme.hover || "#f1f5f9"};
-  }
 `;
 
-/* ---------------- Sidebar ---------------- */
+/* ---------- Sidebar ---------- */
 
 export const Sidebar = styled.aside`
-  width: 220px;
   background: ${({ theme }) => theme.surface};
   border-right: 1px solid ${({ theme }) => theme.border};
-  padding: 70px 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  overflow-y: auto;
   transition: transform 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${({ isMobile, open }) =>
+    isMobile
+      ? `
     position: fixed;
-    inset: 0 auto 0 0;
-    width: 75%;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 75vw;
     max-width: 260px;
-    transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+    transform: ${open ? "translateX(0)" : "translateX(-100%)"};
     z-index: 1001;
-    padding-top: 60px;
-  }
-
-  @media (min-width: 1024px) {
+    padding: 12px;
+  `
+      : `
+    position: sticky;
+    top: 56px;
     width: 240px;
-    padding: 80px 16px 24px;
-  }
-
-  @media (min-width: 1440px) {
-    width: 260px;
-  }
+    padding: 16px;
+    transform: translateX(0);
+  `}
 `;
 
 export const NavItem = styled(NavLink)`
@@ -128,36 +122,22 @@ export const NavItem = styled(NavLink)`
     color: ${({ theme }) => theme.primary || "#2563eb"};
     font-weight: 500;
   }
-
-  &:hover {
-    background: ${({ theme }) => theme.hover || "#f1f5f9"};
-  }
 `;
 
-/* ---------------- Overlay ---------------- */
+/* ---------- Overlay ---------- */
 
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
   z-index: 1000;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;
 
-/* ---------------- Content ---------------- */
+/* ---------- Content ---------- */
 
 export const ContentArea = styled.main`
   flex: 1;
-  padding: 70px 14px 14px;
-
-  @media (min-width: 768px) {
-    padding: 80px 20px 20px;
-  }
-
-  @media (min-width: 1280px) {
-    padding: 90px 32px 32px;
-  }
+  padding: 16px;
+  overflow-y: auto;
+  max-width: 100%;
 `;
