@@ -3,6 +3,7 @@ import api from "../../api/api";
 import {
   PageWrapper,
   Header,
+  TableWrapper,
   Table,
   StatusBadge,
   FilterRow,
@@ -71,7 +72,8 @@ export default function AdminUsers() {
     if (u.role === "ADMIN") return { label: "System", color: "blue" };
     if (u.orders_count === 0) return { label: "Inactive", color: "gray" };
     if (u.total_spent > 10000) return { label: "High Value", color: "green" };
-    if (u.orders_count > 5 && u.total_spent < 1000) return { label: "Risk", color: "red" };
+    if (u.orders_count > 5 && u.total_spent < 1000)
+      return { label: "Risk", color: "red" };
     return { label: "Normal", color: "blue" };
   };
 
@@ -93,7 +95,12 @@ export default function AdminUsers() {
   const exportCSV = () => {
     const csv = [
       ["ID", "Email", "Role", "Status"],
-      ...filtered.map((u) => [u.id, u.email, u.role, u.active ? "Active" : "Blocked"]),
+      ...filtered.map((u) => [
+        u.id,
+        u.email,
+        u.role,
+        u.active ? "Active" : "Blocked",
+      ]),
     ]
       .map((r) => r.join(","))
       .join("\n");
@@ -122,13 +129,21 @@ export default function AdminUsers() {
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          <select className="filter-select" value={role} onChange={(e) => setRole(e.target.value)}>
+          <select
+            className="filter-select"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
             <option value="ALL">All Roles</option>
             <option value="USER">User</option>
             <option value="ADMIN">Admin</option>
           </select>
 
-          <select className="filter-select" value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <select
+            className="filter-select"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
             <option value="ALL">All Status</option>
             <option value="ACTIVE">Active</option>
             <option value="BLOCKED">Blocked</option>
@@ -144,46 +159,63 @@ export default function AdminUsers() {
         <StatCard>High Value: {highValueCount}</StatCard>
       </StatsRow>
 
-      <Table>
-        <thead>
-          <tr>
-            <th onClick={() => toggleSort("id")}>ID</th>
-            <th onClick={() => toggleSort("email")}>Email</th>
-            <th onClick={() => toggleSort("role")}>Role</th>
-            <th>Health</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginated.map((u) => {
-            const health = getHealth(u);
-            return (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.email}</td>
-                <td>{u.role}</td>
-                <td>
-                  <HealthBadge color={health.color}>{health.label}</HealthBadge>
-                </td>
-                <td>
-                  <Tooltip data-text={u.blocked_reason || "No issues"}>
-                    <StatusBadge status={u.active}>{u.active ? "Active" : "Blocked"}</StatusBadge>
-                  </Tooltip>
-                </td>
-                <td>
-                  <ActionButton onClick={() => viewOrders(u)}>View Orders</ActionButton>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <th onClick={() => toggleSort("id")}>ID</th>
+              <th onClick={() => toggleSort("email")}>Email</th>
+              <th onClick={() => toggleSort("role")}>Role</th>
+              <th>Health</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginated.map((u) => {
+              const health = getHealth(u);
+              return (
+                <tr key={u.id}>
+                  <td>{u.id}</td>
+                  <td>{u.email}</td>
+                  <td>{u.role}</td>
+                  <td>
+                    <HealthBadge color={health.color}>
+                      {health.label}
+                    </HealthBadge>
+                  </td>
+                  <td>
+                    <Tooltip data-text={u.blocked_reason || "No issues"}>
+                      <StatusBadge status={u.active}>
+                        {u.active ? "Active" : "Blocked"}
+                      </StatusBadge>
+                    </Tooltip>
+                  </td>
+                  <td>
+                    <ActionButton onClick={() => viewOrders(u)}>
+                      View Orders
+                    </ActionButton>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </TableWrapper>
 
       <PaginationRow>
-        <ActionButton disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</ActionButton>
-        <span>Page {page} / {totalPages}</span>
-        <ActionButton disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</ActionButton>
+        <ActionButton disabled={page === 1} onClick={() => setPage(page - 1)}>
+          Prev
+        </ActionButton>
+        <span>
+          Page {page} / {totalPages}
+        </span>
+        <ActionButton
+          disabled={page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </ActionButton>
       </PaginationRow>
 
       {selectedUser && (
@@ -212,7 +244,12 @@ export default function AdminUsers() {
             </OrdersList>
 
             <ModalActions>
-              <button className="secondary" onClick={() => setSelectedUser(null)}>Close</button>
+              <button
+                className="secondary"
+                onClick={() => setSelectedUser(null)}
+              >
+                Close
+              </button>
             </ModalActions>
           </OrdersModalCard>
         </ModalOverlay>

@@ -3,6 +3,7 @@ import api from "../../api/api";
 import {
   PageWrapper,
   Header,
+  TableWrapper,
   Table,
   ActionButton,
   FilterRow,
@@ -75,48 +76,50 @@ export default function AdminProducts() {
         </FilterRow>
       </Header>
 
-      <Table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredProducts.map((p) => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
-              <td>{p.name}</td>
-              <td>₹{p.price}</td>
-              <td>{p.stock}</td>
-              <td title={p.deactivated_reason || ""}>
-                <StatusBadge status={p.active}>
-                  {p.active ? "Active" : "Inactive"}
-                </StatusBadge>
-              </td>
-              <td>
-                <ActionButton
-                  variant={p.active ? "danger" : "success"}
-                  onClick={() => {
-                    if (p.active) {
-                      setTargetId(p.id);
-                      setShowModal(true);
-                    } else {
-                      toggleStatus(p.id);
-                    }
-                  }}
-                >
-                  {p.active ? "Deactivate" : "Activate"}
-                </ActionButton>
-              </td>
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {filteredProducts.map((p) => (
+              <tr key={p.id}>
+                <td>{p.id}</td>
+                <td>{p.name}</td>
+                <td>₹{p.price}</td>
+                <td>{p.stock}</td>
+                <td title={p.deactivated_reason || ""}>
+                  <StatusBadge status={p.active}>
+                    {p.active ? "Active" : "Inactive"}
+                  </StatusBadge>
+                </td>
+                <td>
+                  <ActionButton
+                    variant={p.active ? "danger" : "success"}
+                    onClick={() => {
+                      if (p.active) {
+                        setTargetId(p.id);
+                        setShowModal(true);
+                      } else {
+                        toggleStatus(p.id);
+                      }
+                    }}
+                  >
+                    {p.active ? "Deactivate" : "Activate"}
+                  </ActionButton>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
 
       {showModal && (
         <ModalOverlay>
