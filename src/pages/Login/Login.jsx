@@ -3,6 +3,8 @@ import { CgProfile } from "react-icons/cg";
 import { TbLockPassword } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+
 import { loginSchema } from "../../validators/validation.js";
 import { loginUser } from "../../api/auth";
 
@@ -23,13 +25,11 @@ import {
   PasswordRow,
   DemoLoginButton,
   LoginErrorText,
-  LoadingText,
 } from "./styled.js";
 
 const Login = () => {
   const [username, setUsername] = useState("demo_user");
   const [password, setPassword] = useState("Demo@9988");
-
   const [showPassword, setShowPassword] = useState(false);
   const [failureMsg, setFailureMsg] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -39,12 +39,15 @@ const Login = () => {
 
   useEffect(() => {
     const token = Cookies.get("jwt_token");
-    if (token) navigate("/");
+    if (token) {
+      const decoded = jwtDecode(token);
+      navigate(decoded.role === "ADMIN" ? "/admin/orders" : "/");
+    }
   }, [navigate]);
 
-  const redirectHome = (jwtToken) => {
-    Cookies.set("jwt_token", jwtToken);
-    navigate("/");
+  const redirectAfterLogin = (jwtToken) => {
+    const decoded = jwtDecode(jwtToken);
+    navigate(decoded.role === "ADMIN" ? "/admin/orders" : "/");
   };
 
   const RedirectToSignup = () => navigate("/signup");
@@ -68,27 +71,22 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     setFailureMsg("");
-    setLoading(true); // show loading text
+    setLoading(true);
 
     if (!validateForm()) {
-      setLoading(false); // stop loading if validation fails
+      setLoading(false);
       return;
     }
 
     try {
-      const response = await loginUser({ username, password });
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("username", username);
-        redirectHome(data.jwt_token);
-      } else {
-        setFailureMsg(data.error);
-      }
+      const data = await loginUser({ username, password });
+      localStorage.setItem("username", username);
+      redirectAfterLogin(data.jwt_token);
     } catch (err) {
       console.log("Login Error:", err);
+      setFailureMsg(err.message || "Login failed");
     } finally {
-      setLoading(false); // hide loading text
+      setLoading(false);
     }
   };
 
@@ -108,7 +106,7 @@ const Login = () => {
           <AllInputContainer>
             <Label>Username</Label>
             <InputContainer>
-              <CgProfile size={20} color="gray" />
+              <CgProfile size={20} />
               <LoginInput
                 type="text"
                 value={username}
@@ -121,7 +119,7 @@ const Login = () => {
 
             <Label>Password</Label>
             <InputContainer>
-              <TbLockPassword size={20} color="gray" />
+              <TbLockPassword size={20} />
               <LoginInput
                 type={showPassword ? "text" : "password"}
                 value={password}
@@ -146,12 +144,14 @@ const Login = () => {
             </DemoLoginButton>
 
             <ButtonRow>
-              <LoginButton type="submit">Login</LoginButton>
+              <LoginButton type="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Login"}
+              </LoginButton>
               <SignupButton type="button" onClick={RedirectToSignup}>
                 SignUp
               </SignupButton>
             </ButtonRow>
-            {loading && <LoadingText>Loading...</LoadingText>}
+
             {failureMsg && <ErrorMsg>{failureMsg}</ErrorMsg>}
           </AllInputContainer>
         </LoginForm>

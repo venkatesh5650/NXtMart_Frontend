@@ -99,8 +99,7 @@ export const LoginInput = styled.input`
   background: transparent;
 
   &::placeholder {
-    color: ${({ theme }) =>
-      theme.background === "#ffffff" ? "#666" : "#aaa"};
+    color: ${({ theme }) => (theme.background === "#ffffff" ? "#666" : "#aaa")};
   }
 
   @media (min-width: 600px) {
@@ -111,8 +110,7 @@ export const LoginInput = styled.input`
 export const Label = styled.label`
   font-size: 15px;
   font-weight: 500;
-  color: ${({ theme }) =>
-    theme.background === "#ffffff" ? "black" : "white"};
+  color: ${({ theme }) => (theme.background === "#ffffff" ? "black" : "white")};
 `;
 
 export const PasswordRow = styled.div`
@@ -162,6 +160,12 @@ export const LoginButton = styled.button`
     background-color: black;
     transform: scale(1.04);
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
 `;
 
 export const SignupButton = styled(LoginButton)`
@@ -205,7 +209,6 @@ export const LoginErrorText = styled.p`
   margin-bottom: 8px;
   margin-top: -8px;
 `;
-
 
 export const LoadingText = styled.p`
   text-align: center;

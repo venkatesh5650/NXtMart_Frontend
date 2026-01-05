@@ -1,21 +1,36 @@
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 /**
  * ProtectedRoute:
  * - Restricts access to authenticated users only.
- * - Simplifies route protection by validating JWT token stored in cookies.
- * - Helps maintain clean routing logic and avoids repeating auth checks in pages.
+ * - Optionally restricts access by role.
+ *
+ * Usage:
+ * <ProtectedRoute Component={Dashboard} />
+ * <ProtectedRoute Component={AdminDashboard} role="ADMIN" />
  */
-const ProtectedRoute = ({ Component }) => {
+const ProtectedRoute = ({ Component, role }) => {
   const token = Cookies.get("jwt_token");
 
-  // Redirect unauthenticated users to login with route replacement
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  // Render the protected page if token exists
+  let decoded;
+  try {
+    decoded = jwtDecode(token);
+  } catch (err) {
+    Cookies.remove("jwt_token");
+    return <Navigate to="/login" replace />;
+  }
+
+  // If role is specified and does not match → redirect
+  if (role && decoded.role !== role) {
+    return <Navigate to="/" replace />;
+  }
+
   return <Component />;
 };
 

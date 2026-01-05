@@ -1,8 +1,7 @@
 import styled from "styled-components";
-
 import { FaShoppingCart } from "react-icons/fa";
 
-/* Desktop Cart Icon Wrapper */
+/* Desktop Cart Wrapper */
 export const DesktopCartWrapper = styled.span`
   position: relative;
   display: inline-flex;
@@ -14,40 +13,29 @@ export const DesktopCartWrapper = styled.span`
   }
 `;
 
-/* Desktop Cart Icon */
 export const DesktopCartIcon = styled(FaShoppingCart)`
   font-size: 16px;
   color: ${({ theme }) => theme.text};
 `;
 
-/* Desktop Cart Badge */
 export const DesktopCartBadge = styled.span`
   position: absolute;
   top: -10px;
   right: -10px;
-
   min-width: 16px;
   height: 16px;
-
-  background-color: #ff3b30;
-  color: #ffffff;
-
+  background-color: #22c55e;
+  color: white;
   font-size: 9px;
   font-weight: 700;
-
   border-radius: 50%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  line-height: 1;
 `;
 
-/* Mobile Cart Wrapper */
 export const MobileCartWrapper = styled.div`
   display: none;
-  align-items: center;
   position: relative;
   cursor: pointer;
 
@@ -56,24 +44,21 @@ export const MobileCartWrapper = styled.div`
   }
 `;
 
-/* Cart Icon */
 export const MobileCartIcon = styled(FaShoppingCart)`
   font-size: 22px;
   color: ${({ theme }) => theme.text};
 `;
 
-/* Cart Count Badge */
 export const MobileCartBadge = styled.span`
   position: absolute;
   top: -6px;
   right: -8px;
-  background-color: #ff3b30;
-  color: #ffffff;
+  background-color: #22c55e;
+  color: #fff;
   font-size: 10px;
   font-weight: 600;
   padding: 2px 6px;
   border-radius: 50%;
-  line-height: 1;
 `;
 
 export const HeaderContainer = styled.header`
@@ -88,20 +73,14 @@ export const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   width: 100vw;
-  box-sizing: border-box;
   z-index: 1000;
-  overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 255, 0, 0.18);
-
-  @media (max-width: 480px) {
-    padding: 8px 12px;
-  }
+  box-shadow: 0 2px 10px rgba(34, 197, 94, 0.25);
 `;
 
 export const Logo = styled.img`
   width: 110px;
-  height: 60px;
   cursor: pointer;
+  height: 50px;
 
   @media (max-width: 480px) {
     width: 90px;
@@ -111,20 +90,11 @@ export const Logo = styled.img`
 export const Tagline = styled.p`
   font-size: 18px;
   font-weight: 600;
-
-  /* Light → default green | Dark → green */
-  color: ${({ theme }) => (theme.background === "#ffffff" ? "green" : "green")};
-
+  color: green;
   margin: 0 auto;
-  white-space: nowrap;
 
   @media (max-width: 768px) {
     display: none;
-  }
-
-  &:hover {
-    color: ${({ theme }) =>
-      theme.background === "#ffffff" ? "black" : "white"};
   }
 `;
 
@@ -147,41 +117,20 @@ export const NavItem = styled.li`
 export const NavButton = styled.button`
   background: transparent;
   border: none;
-
-  /* Light → green | Dark → green */
-  color: ${({ theme }) => (theme.background === "#ffffff" ? "green" : "green")};
-
+  color: green;
   font-size: 16px;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.3s;
-  white-space: nowrap;
+  transition: 0.2s ease;
 
   &:hover {
     color: ${({ theme }) =>
-      theme.background === "#ffffff" ? "black" : "lightgreen"};
+      theme.background === "#ffffff" ? "#111" : "#86efac"};
   }
 `;
 
-export const CartBadge = styled.span`
-  background-color: green; /* NxtMart green */
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 999px;
-  padding: 2px 6px;
-  margin-left: 6px;
-  margin-bottom: 1px;
-  min-width: 18px;
-  text-align: center;
-`;
-// #22c55e
 export const MobileMenuIcon = styled.div`
   display: none;
-
-  /* Light → green | Dark → green */
-  color: ${({ theme }) => (theme.background === "#ffffff" ? "green" : "green")};
-
   cursor: pointer;
 
   @media (max-width: 768px) {
@@ -194,21 +143,15 @@ export const MobileNavMenu = styled.div`
   top: 65px;
   right: 0;
   width: 100%;
-
-  /* Light → white | Dark → black card */
   background: ${({ theme }) =>
-    theme.background === "#ffffff" ? "white" : "#0d0d0d"};
-
-  padding: 14px 0;
+    theme.background === "#ffffff" ? "#ffffff" : "#0d0d0d"};
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   align-items: center;
-
-  border-bottom: 1px solid
-    ${({ theme }) => (theme.background === "#ffffff" ? "#d1d5db" : "green")};
-
-  animation: slideDown 0.3s ease-in-out;
+  border-bottom: 1px solid #22c55e;
+  animation: slideDown 0.3s ease;
 
   @keyframes slideDown {
     from {

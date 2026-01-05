@@ -53,6 +53,11 @@ const Header = () => {
         <NavItem>
           <NavButton onClick={() => navigate("/")}>Home</NavButton>
         </NavItem>
+
+        <NavItem>
+          <NavButton onClick={() => navigate("/orders")}>My Orders</NavButton>
+        </NavItem>
+
         <NavItem>
           <NavButton onClick={() => navigate("/cart")}>
             Cart
@@ -64,13 +69,13 @@ const Header = () => {
             )}
           </NavButton>
         </NavItem>
+
         <NavItem>
           <NavButton onClick={logout}>Logout</NavButton>
         </NavItem>
       </NavContainer>
 
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-     
         <MobileCartWrapper onClick={() => navigate("/cart")}>
           <MobileCartIcon />
           {cartItemCount > 0 && (
@@ -78,7 +83,6 @@ const Header = () => {
           )}
         </MobileCartWrapper>
 
-   
         <MobileMenuIcon onClick={() => setMenuOpen((prev) => !prev)}>
           {menuOpen ? (
             <IoClose size={28} color={theme.text} />
@@ -91,6 +95,7 @@ const Header = () => {
       {menuOpen && (
         <MobileNavMenu>
           <NavButton onClick={() => navigate("/")}>Home</NavButton>
+          <NavButton onClick={() => navigate("/orders")}>My Orders</NavButton>
           <NavButton onClick={() => navigate("/cart")}>Cart</NavButton>
           <NavButton onClick={logout}>Logout</NavButton>
         </MobileNavMenu>

@@ -82,7 +82,6 @@ const Cart = () => {
   // Simple checkout handler with state reset for user
   const directToCheckout = () => {
     navigate("/Checkout");
-    localStorage.removeItem(storageKey);
   };
 
   // Real-time search inside cart for better UX
@@ -134,9 +133,7 @@ const Cart = () => {
               Total ({Cartlist.length} items): ₹ {TotalAmount}/-
             </BillMsg>
 
-            <CheckoutButton onClick={directToCheckout}>
-              Checkout
-            </CheckoutButton>
+            <CheckoutButton onClick={directToCheckout}>Checkout</CheckoutButton>
           </BillContainer>
         )}
 
