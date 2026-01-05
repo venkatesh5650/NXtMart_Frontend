@@ -83,6 +83,18 @@ const Cart = () => {
   const directToCheckout = () => {
     navigate("/Checkout");
   };
+  useEffect(() => {
+    const syncCart = () => {
+      const updated = JSON.parse(localStorage.getItem(storageKey)) || [];
+      setCartlist(updated);
+    };
+
+    syncCart();
+
+    const interval = setInterval(syncCart, 300);
+
+    return () => clearInterval(interval);
+  }, [storageKey]);
 
   // Real-time search inside cart for better UX
   const filteredList = Cartlist.filter((item) =>

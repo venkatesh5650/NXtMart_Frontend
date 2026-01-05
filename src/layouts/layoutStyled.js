@@ -7,6 +7,8 @@ export const LayoutWrapper = styled.div`
   background: ${({ theme }) => theme.background};
 `;
 
+/* ---------------- Top Bar ---------------- */
+
 export const TopBar = styled.header`
   position: fixed;
   top: 0;
@@ -20,12 +22,24 @@ export const TopBar = styled.header`
   justify-content: space-between;
   padding: 0 16px;
   z-index: 1000;
+
+  @media (min-width: 1024px) {
+    padding: 0 24px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 0 32px;
+  }
 `;
 
 export const Brand = styled.div`
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   color: ${({ theme }) => theme.text};
+
+  @media (min-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 
 export const MenuButton = styled.button`
@@ -33,6 +47,7 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
+  padding: 6px;
 
   @media (min-width: 768px) {
     display: none;
@@ -42,9 +57,14 @@ export const MenuButton = styled.button`
 export const RightActions = styled.div`
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 13px;
+  gap: 12px;
+  font-size: 12px;
   color: ${({ theme }) => theme.mutedText};
+
+  @media (min-width: 1024px) {
+    font-size: 13px;
+    gap: 14px;
+  }
 `;
 
 export const LogoutButton = styled.button`
@@ -61,7 +81,14 @@ export const LogoutButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.hover || "#f1f5f9"};
   }
+
+  @media (max-width: 480px) {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
 `;
+
+/* ---------------- Sidebar ---------------- */
 
 export const Sidebar = styled.aside`
   width: 220px;
@@ -73,6 +100,15 @@ export const Sidebar = styled.aside`
   gap: 6px;
   transition: transform 0.3s ease;
 
+  @media (min-width: 1024px) {
+    width: 240px;
+    padding: 90px 16px 24px;
+  }
+
+  @media (min-width: 1440px) {
+    width: 260px;
+  }
+
   @media (max-width: 768px) {
     position: fixed;
     top: 0;
@@ -81,6 +117,12 @@ export const Sidebar = styled.aside`
     transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
     z-index: 1001;
     padding-top: 70px;
+    width: 75%;
+    max-width: 260px;
+  }
+
+  @media (max-width: 480px) {
+    width: 85%;
   }
 `;
 
@@ -90,6 +132,7 @@ export const NavItem = styled(NavLink)`
   text-decoration: none;
   color: ${({ theme }) => theme.text};
   font-size: 14px;
+  transition: background 0.2s ease;
 
   &.active {
     background: ${({ theme }) => theme.primarySoft || "#e0f2fe"};
@@ -100,12 +143,19 @@ export const NavItem = styled(NavLink)`
   &:hover {
     background: ${({ theme }) => theme.hover || "#f1f5f9"};
   }
+
+  @media (max-width: 480px) {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
 `;
+
+/* ---------------- Overlay ---------------- */
 
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
   z-index: 1000;
 
   @media (min-width: 768px) {
@@ -113,11 +163,25 @@ export const Overlay = styled.div`
   }
 `;
 
+/* ---------------- Content Area ---------------- */
+
 export const ContentArea = styled.main`
   flex: 1;
-  padding: 80px 24px 24px 24px;
+  padding: 80px 20px 20px;
 
-  @media (max-width: 768px) {
-    padding: 72px 16px 16px 16px;
+  @media (min-width: 768px) {
+    padding: 80px 24px 24px 24px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 90px 32px 32px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 100px 48px 48px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 72px 14px 14px;
   }
 `;
