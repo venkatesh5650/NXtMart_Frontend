@@ -67,22 +67,38 @@ function App() {
             <Route
               path="products"
               element={
-                <ProtectedRoute role="ADMIN" Component={AdminProducts} />
+                <ProtectedRoute
+                  roles={["ADMIN", "DEMO_ADMIN"]}
+                  Component={AdminProducts}
+                />
               }
             />
             <Route
               path="orders"
-              element={<ProtectedRoute role="ADMIN" Component={AdminOrders} />}
+              element={
+                <ProtectedRoute
+                  roles={["ADMIN", "DEMO_ADMIN"]}
+                  Component={AdminOrders}
+                />
+              }
             />
             <Route
               path="orders/:id"
               element={
-                <ProtectedRoute role="ADMIN" Component={AdminOrderDetails} />
+                <ProtectedRoute
+                  roles={["ADMIN", "DEMO_ADMIN"]}
+                  Component={AdminOrderDetails}
+                />
               }
             />
             <Route
               path="users"
-              element={<ProtectedRoute role="ADMIN" Component={AdminUsers} />}
+              element={
+                <ProtectedRoute
+                  roles={["ADMIN", "DEMO_ADMIN"]}
+                  Component={AdminUsers}
+                />
+              }
             />
           </Route>
 

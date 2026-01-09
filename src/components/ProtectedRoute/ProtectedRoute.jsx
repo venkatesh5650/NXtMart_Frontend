@@ -2,36 +2,21 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
-/**
- * ProtectedRoute:
- * - Restricts access to authenticated users only.
- * - Optionally restricts access by role.
- *
- * Usage:
- * <ProtectedRoute Component={Dashboard} />
- * <ProtectedRoute Component={AdminDashboard} role="ADMIN" />
- */
-const ProtectedRoute = ({ Component, role }) => {
+export default function ProtectedRoute({ Component, role, roles }) {
   const token = Cookies.get("jwt_token");
 
-  if (!token) {
-    return <Navigate to="/login" replace />;
+  if (!token) return <Navigate to="/login" replace />;
+
+  const decoded = jwtDecode(token);
+  const userRole = decoded.role;
+
+  if (role && userRole !== role) {
+    return <Navigate to="/" replace />;
   }
 
-  let decoded;
-  try {
-    decoded = jwtDecode(token);
-  } catch (err) {
-    Cookies.remove("jwt_token");
-    return <Navigate to="/login" replace />;
-  }
-
-  // If role is specified and does not match → redirect
-  if (role && decoded.role !== role) {
+  if (roles && !roles.includes(userRole)) {
     return <Navigate to="/" replace />;
   }
 
   return <Component />;
-};
-
-export default ProtectedRoute;
+}

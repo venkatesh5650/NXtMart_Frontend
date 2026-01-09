@@ -41,13 +41,22 @@ const Login = () => {
     const token = Cookies.get("jwt_token");
     if (token) {
       const decoded = jwtDecode(token);
-      navigate(decoded.role === "ADMIN" ? "/admin/orders" : "/");
+      navigate(
+        decoded.role === "ADMIN" || decoded.role === "DEMO_ADMIN"
+          ? "/admin/orders"
+          : "/"
+      );
     }
   }, [navigate]);
 
   const redirectAfterLogin = (jwtToken) => {
     const decoded = jwtDecode(jwtToken);
-    navigate(decoded.role === "ADMIN" ? "/admin/orders" : "/");
+    console.log(decoded);
+    navigate(
+      decoded.role === "ADMIN" || decoded.role === "DEMO_ADMIN"
+        ? "/admin/orders"
+        : "/"
+    );
   };
 
   const RedirectToSignup = () => navigate("/signup");
@@ -95,6 +104,11 @@ const Login = () => {
     setPassword("Demo@9988");
   };
 
+  const handleDemoAdminLogin = () => {
+    setUsername("demo_admin");
+    setPassword("demo123");
+  };
+
   return (
     <LoginContainer>
       <LoginCard>
@@ -140,7 +154,11 @@ const Login = () => {
             </PasswordRow>
 
             <DemoLoginButton type="button" onClick={handleDemoLogin}>
-              Use Demo Credentials
+              Use Demo User Credentials
+            </DemoLoginButton>
+
+            <DemoLoginButton type="button" onClick={handleDemoAdminLogin}>
+              Use Demo Admin (Read Only)
             </DemoLoginButton>
 
             <ButtonRow>

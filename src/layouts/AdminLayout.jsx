@@ -54,7 +54,7 @@ export default function AdminLayout() {
       </TopBar>
 
       <AppContainer>
-        <Sidebar open={open} isMobile={isMobile}>
+        <Sidebar open={open} $isMobile={isMobile}>
           <NavItem to="/admin/orders" onClick={() => setOpen(false)}>
             Orders
           </NavItem>
@@ -66,7 +66,7 @@ export default function AdminLayout() {
           </NavItem>
         </Sidebar>
 
-        <ContentArea isMobile={isMobile}>
+        <ContentArea $isMobile={isMobile}>
           <Outlet />
         </ContentArea>
       </AppContainer>
