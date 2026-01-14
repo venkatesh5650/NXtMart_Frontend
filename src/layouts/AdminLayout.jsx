@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FiMenu, FiLogOut } from "react-icons/fi";
@@ -18,14 +18,7 @@ import {
 
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const resize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
-  }, []);
 
   const handleLogout = () => {
     Cookies.remove("jwt_token");
@@ -36,11 +29,9 @@ export default function AdminLayout() {
   return (
     <LayoutWrapper>
       <TopBar>
-        {isMobile && (
-          <MenuButton onClick={() => setOpen(true)}>
-            <FiMenu size={22} />
-          </MenuButton>
-        )}
+        <MenuButton onClick={() => setOpen(true)}>
+          <FiMenu size={22} />
+        </MenuButton>
 
         <Brand>NxtMart Admin</Brand>
 
@@ -54,7 +45,7 @@ export default function AdminLayout() {
       </TopBar>
 
       <AppContainer>
-        <Sidebar open={open} $isMobile={isMobile}>
+        <Sidebar open={open}>
           <NavItem to="/admin/orders" onClick={() => setOpen(false)}>
             Orders
           </NavItem>
@@ -66,12 +57,12 @@ export default function AdminLayout() {
           </NavItem>
         </Sidebar>
 
-        <ContentArea $isMobile={isMobile}>
+        <ContentArea>
           <Outlet />
         </ContentArea>
       </AppContainer>
 
-      {isMobile && open && <Overlay onClick={() => setOpen(false)} />}
+      {open && <Overlay onClick={() => setOpen(false)} />}
     </LayoutWrapper>
   );
 }

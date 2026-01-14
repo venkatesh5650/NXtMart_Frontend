@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 export const LayoutWrapper = styled.div`
   min-height: 100vh;
   background: ${({ theme }) => theme.background};
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 `;
@@ -32,12 +32,8 @@ export const TopBar = styled.header`
 
 export const AppContainer = styled.div`
   display: flex;
-  margin-top: 56px; /* Push content below header */
-  min-height: calc(100vh - 56px);
-  max-width: 1440px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 56px;
+  height: calc(100vh - 56px);
 `;
 
 /* ---------- Brand ---------- */
@@ -53,6 +49,10 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 /* ---------- Actions ---------- */
@@ -82,32 +82,27 @@ export const LogoutButton = styled.button`
 export const Sidebar = styled.aside`
   background: ${({ theme }) => theme.surface};
   border-right: 1px solid ${({ theme }) => theme.border};
+  position: fixed;
+  top: 56px;
+  left: 0;
+  bottom: 0;
+  width: 75vw;
+  max-width: 260px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   overflow-y: auto;
+  transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
   transition: transform 0.3s ease;
+  z-index: 1001;
 
-  ${({ isMobile, open }) =>
-    isMobile
-      ? `
-    position: fixed;
-    top: 56px;
-    left: 0;
-    bottom: 0;
-    width: 75vw;
-    max-width: 260px;
-    transform: ${open ? "translateX(0)" : "translateX(-100%)"};
-    z-index: 1001;
-    padding: 12px;
-  `
-      : `
+  @media (min-width: 768px) {
     position: sticky;
-    top: 56px;
+    transform: none;
     width: 240px;
     padding: 16px;
-    transform: translateX(0);
-  `}
+  }
 `;
 
 export const NavItem = styled(NavLink)`
@@ -131,6 +126,10 @@ export const Overlay = styled.div`
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
   z-index: 1000;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 /* ---------- Content ---------- */
@@ -138,6 +137,8 @@ export const Overlay = styled.div`
 export const ContentArea = styled.main`
   flex: 1;
   padding: 16px;
+  height: 100%;
   overflow-y: auto;
   max-width: 100%;
+  background: ${({ theme }) => theme.background};
 `;
