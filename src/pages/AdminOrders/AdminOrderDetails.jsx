@@ -53,6 +53,7 @@ export default function AdminOrderDetails() {
 
   async function updateStatus() {
     try {
+      console.log("Updating to:", nextStatus);
       await api.put(`/admin/orders/${id}/status`, { status: nextStatus });
       setNextStatus("");
       load();
